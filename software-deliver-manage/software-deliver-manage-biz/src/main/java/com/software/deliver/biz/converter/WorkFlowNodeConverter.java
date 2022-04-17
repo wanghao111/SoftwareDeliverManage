@@ -35,31 +35,29 @@ public class WorkFlowNodeConverter {
                 .workFlowCode(workFlowNode.getWorkFlowCode())
                 .workFlowNodeTitle(workFlowNode.getWorkFlowNodeTitle())
                 .nodeType(workFlowNode.getNodeType())
-                .isLastNode(workFlowNode.getIsLastNode())
-                .isStartNode(workFlowNode.getIsStartNode())
-                .isMiddleNode(workFlowNode.getIsMiddleNode())
+                .nodeSeqType(workFlowNode.getNodeSeqType())
                 .handlerType(workFlowNode.getHandlerType())
                 .summaryType(workFlowNode.getSummaryType())
                 .varName(workFlowNode.getVarName())
                 .build();
 
-        List<Long> preWorkFlowNodeIds = workFlowNode.getPreWorkFlowNodeIds();
-        List<Long> nextWorkFlowNodeIds = workFlowNode.getNextWorkFlowNodeIds();
+        List<String> preWorkFlowNodeCodes = workFlowNode.getPreWorkFlowNodeCodes();
+        List<String> nextWorkFlowNodeCodes = workFlowNode.getNextWorkFlowNodeCodes();
 
-        Optional.ofNullable(preWorkFlowNodeIds).ifPresent(preIds->preIds.forEach(preId->{
+        Optional.ofNullable(preWorkFlowNodeCodes).ifPresent(preCodes->preCodes.forEach(preCode->{
             WorkFlowNodeRelVO workFlowNodeRelVO = WorkFlowNodeRelVO.builder()
                     .workFlowNodeId(workFlowNode.getId())
                     .workFlowId(workFlowNode.getWorkFlowId())
-                    .relWorkFlowNodeId(preId)
+                    .relWorkFlowNodeCode(preCode)
                     .type(WorkFlowNodeRelTypeEnum.PRE_NODE.getType())
                     .build();
             nodeRelVOS.add(workFlowNodeRelVO);
         }));
 
-        Optional.ofNullable(nextWorkFlowNodeIds).ifPresent(nextIds->nextIds.forEach(nextId->{
+        Optional.ofNullable(nextWorkFlowNodeCodes).ifPresent(nextCodes->nextCodes.forEach(nextCode->{
             WorkFlowNodeRelVO workFlowNodeRelVO = WorkFlowNodeRelVO.builder()
                     .workFlowNodeId(workFlowNode.getId())
-                    .relWorkFlowNodeId(nextId)
+                    .relWorkFlowNodeCode(nextCode)
                     .type(WorkFlowNodeRelTypeEnum.NEXT_NODE.getType())
                     .build();
             nodeRelVOS.add(workFlowNodeRelVO);
@@ -77,5 +75,22 @@ public class WorkFlowNodeConverter {
         }));
         return workFlowNodeVO;
     }
+
+    public static WorkFlowNode WorkFlowNodeVO2WorkFlowNode(WorkFlowNodeVO workFlowNodeVO) {
+        WorkFlowNode workFlowNode = WorkFlowNode.builder()
+                .id(workFlowNodeVO.getId())
+                .workFlowNodeCode(workFlowNodeVO.getWorkFlowNodeCode())
+                .nodeSeqType(workFlowNodeVO.getNodeSeqType())
+                .handlerType(workFlowNodeVO.getHandlerType())
+                .summaryType(workFlowNodeVO.getSummaryType())
+                .nodeType(workFlowNodeVO.getNodeType())
+                .workFlowId(workFlowNodeVO.getWorkFlowId())
+                .workFlowCode(workFlowNodeVO.getWorkFlowCode())
+                .workFlowNodeTitle(workFlowNodeVO.getWorkFlowNodeTitle())
+                .varName(workFlowNodeVO.getVarName())
+                .build();
+        return workFlowNode;
+    }
+
 
 }

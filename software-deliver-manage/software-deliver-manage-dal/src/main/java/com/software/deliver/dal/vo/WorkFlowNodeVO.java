@@ -63,30 +63,38 @@ public class WorkFlowNodeVO {
      */
     private Integer summaryType;
 
-    /**
-     * 是否开始节点
-     * 0:无意义，默认
-     * 1:是
-     * 2:否
-     */
-    private Integer isStartNode;
+//    /**
+//     * 是否开始节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isStartNode;
+//
+//    /**
+//     * 是否最后节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isLastNode;
+//
+//    /**
+//     * 是否中间节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isMiddleNode;
 
     /**
-     * 是否最后节点
+     * 节点顺序类型
      * 0:无意义，默认
-     * 1:是
-     * 2:否
+     * 1:开始节点
+     * 2:中间节点
+     * 3:结束节点
      */
-    private Integer isLastNode;
-
-    /**
-     * 是否中间节点
-     * 0:无意义，默认
-     * 1:是
-     * 2:否
-     */
-    private Integer isMiddleNode;
-
+    private Integer nodeSeqType;
 
     private Timestamp createdAt;
 

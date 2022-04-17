@@ -1,6 +1,7 @@
 package com.software.deliver.dal.mapper;
 
 import com.software.deliver.dal.vo.WorkFlowNodeVO;
+import com.software.deliver.dal.vo.WorkFlowVO;
 
 import java.util.List;
 
@@ -21,5 +22,9 @@ public interface WorkFlowNodeDao {
     int deleteByWorkFlowId(Long workFlowId);
 
 //    int update(WorkFlowNodeVO workFlowNodeVO);
+
+    WorkFlowNodeVO getStartNode(String workFlowCode);
+
+    WorkFlowNodeVO getNextNode(String workFlowCode);
 
 }

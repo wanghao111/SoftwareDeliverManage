@@ -2,16 +2,15 @@ package com.software.deliver.biz.impl;
 
 import com.software.deliver.biz.SystemTaskApplyFormService;
 import com.software.deliver.biz.WorkFlowInstanceService;
+import com.software.deliver.biz.WorkFlowProgressService;
 import com.software.deliver.biz.WorkFlowService;
 import com.software.deliver.biz.constants.SoftwareBizConstants;
 import com.software.deliver.biz.converter.SystemTaskApplyFormConverter;
 import com.software.deliver.biz.enums.BizExceptionEnum;
 import com.software.deliver.biz.enums.WorkFlowEnableEnum;
+import com.software.deliver.biz.enums.WorkFlowProgressStatusEnum;
 import com.software.deliver.biz.factory.BizExceptionFactory;
-import com.software.deliver.biz.model.BizException;
-import com.software.deliver.biz.model.SystemTaskApplyForm;
-import com.software.deliver.biz.model.WorkFlow;
-import com.software.deliver.biz.model.WorkFlowInstance;
+import com.software.deliver.biz.model.*;
 import com.software.deliver.dal.mapper.SystemTaskApplyFormDao;
 import com.software.deliver.dal.vo.SystemTaskApplyFormVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,8 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
     @Autowired
     private WorkFlowService workFlowService;
 
+    @Autowired
+    private WorkFlowProgressService workFlowProgressService;
 
 
     @Override
@@ -62,10 +63,27 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
 
         //创建审批处理任务
         //提交人
-
+        WorkFlowProgress workFlowProgress = WorkFlowProgress.builder()
+                .workFlowId(workFlow.getId())
+                .flowCode(workFlow.getCode())
+                .flowInstanceId(workFlowInstance.getId())
+//                .flowNodeId()
+                .handlerUserId(systemTaskApplyForm.getCreatedBy())
+                .status(WorkFlowProgressStatusEnum.SUBMIT.getStatus())
+                .build();
+        WorkFlowNode briefStartNode = workFlowService.getBriefStartNode(workFlow.getCode());
+        workFlowProgress.setFlowNodeCode(briefStartNode.getWorkFlowNodeCode());
+        workFlowProgressService.create(workFlowProgress);
 
         //第一个审批人
-
+        WorkFlowNode briefNextNode = workFlowService.getBriefNextNode(briefStartNode.getWorkFlowNodeCode());
+        workFlowProgress.setFlowNodeCode(briefNextNode.getWorkFlowNodeCode());
+        workFlowProgress.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
+        workFlowProgress.setId(null);
+        //根据节点参数判断下一个节点的处理人userId，可能是多个人
+        //todo:wh 待实现
+        workFlowProgress.setHandlerUserId();
+        workFlowProgressService.create(workFlowProgress);
 
         return 1;
     }

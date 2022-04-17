@@ -114,4 +114,16 @@ public class WorkFlowServiceImpl implements WorkFlowService {
         WorkFlowVO workFlowVO = workFlowDao.getByCode(workFlowCode);
         return WorkFlowConverter.fromWorkFlowVO(workFlowVO);
     }
+
+    @Override
+    public WorkFlowNode getBriefStartNode(String workFlowCode) {
+        WorkFlowNodeVO startNode = workFlowNodeDao.getStartNode(workFlowCode);
+        return WorkFlowNodeConverter.WorkFlowNodeVO2WorkFlowNode(startNode);
+    }
+
+    @Override
+    public WorkFlowNode getBriefNextNode(String workFlowCode) {
+        WorkFlowNodeVO nextNode = workFlowNodeDao.getNextNode(workFlowCode);
+        return WorkFlowNodeConverter.WorkFlowNodeVO2WorkFlowNode(nextNode);
+    }
 }

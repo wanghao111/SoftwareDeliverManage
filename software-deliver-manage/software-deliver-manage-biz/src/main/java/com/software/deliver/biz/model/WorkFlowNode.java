@@ -1,5 +1,6 @@
 package com.software.deliver.biz.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.util.List;
  * @date 2022/4/16 17:36
  */
 @Data
+@Builder
 public class WorkFlowNode {
     private long id;
 
@@ -59,39 +61,48 @@ public class WorkFlowNode {
      */
     private Integer summaryType;
 
-    /**
-     * 是否开始节点
-     * 0:无意义，默认
-     * 1:是
-     * 2:否
-     */
-    private Integer isStartNode;
+//    /**
+//     * 是否开始节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isStartNode;
+//
+//    /**
+//     * 是否最后节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isLastNode;
+//
+//    /**
+//     * 是否中间节点
+//     * 0:无意义，默认
+//     * 1:是
+//     * 2:否
+//     */
+//    private Integer isMiddleNode;
 
     /**
-     * 是否最后节点
+     * 节点顺序类型
      * 0:无意义，默认
-     * 1:是
-     * 2:否
+     * 1:开始节点
+     * 2:中间节点
+     * 3:结束节点
      */
-    private Integer isLastNode;
-
-    /**
-     * 是否中间节点
-     * 0:无意义，默认
-     * 1:是
-     * 2:否
-     */
-    private Integer isMiddleNode;
+    private Integer nodeSeqType;
 
     /**
      * 前置节点列表
      */
-    List<Long> preWorkFlowNodeIds;
+    List<String> preWorkFlowNodeCodes;
 
     /**
      * 后置节点列表
      */
-    List<Long> nextWorkFlowNodeIds;
+    List<String> nextWorkFlowNodeCodes;
 
     /**
      * 节点的动作列表，如同意、驳回、加签等

@@ -28,7 +28,10 @@ public class WorkFlowNodeRelVO {
      */
     private Integer type;
 
-    private Long relWorkFlowNodeId;
+    /**
+     * 关联节点的code
+     */
+    private String relWorkFlowNodeCode;
 
     private Timestamp createdAt;
 

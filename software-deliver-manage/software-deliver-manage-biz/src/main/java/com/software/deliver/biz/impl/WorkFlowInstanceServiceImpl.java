@@ -23,6 +23,9 @@ public class WorkFlowInstanceServiceImpl implements WorkFlowInstanceService {
     public int create(WorkFlowInstance workFlowInstance) {
         WorkFlowInstanceVO workFlowInstanceVO = WorkFlowInstanceConverter.from(workFlowInstance);
         workFlowInstanceDao.create(workFlowInstanceVO);
+
+        //»ØÌîÖ÷¼ü
+        workFlowInstance.setId(workFlowInstanceVO.getId());
         return 0;
     }
 }

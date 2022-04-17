@@ -1,6 +1,6 @@
 package com.software.deliver.dal.mapper;
 
-import com.software.deliver.dal.vo.WorkFlowInstanceVO;
+import com.software.deliver.dal.vo.WorkFlowProgressVO;
 
 /**
  * @author wanghao
@@ -9,5 +9,5 @@ import com.software.deliver.dal.vo.WorkFlowInstanceVO;
  */
 public interface WorkFlowProcessDao {
 
-    int create(WorkFlowInstanceVO workFlowInstanceVO);
+    int create(WorkFlowProgressVO workFlowProgressVO);
 }

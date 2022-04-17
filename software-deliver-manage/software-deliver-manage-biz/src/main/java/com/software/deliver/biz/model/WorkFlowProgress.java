@@ -1,27 +1,24 @@
-package com.software.deliver.dal.vo;
+package com.software.deliver.biz.model;
 
 import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+
 /**
  * @author wanghao
  * @version 1.0
- * @date 2022/4/16 10:28
- * 流程处理进度表
+ * @date 2022/4/17 20:27
  */
 @Data
 @Builder
-public class WorkFlowProgressVO {
+public class WorkFlowProgress {
 
-
-    private long id;
+    private Long id;
 
     private long workFlowId;
 
     private String flowCode;
-
-//    private long flowNodeId;
 
     private String flowNodeCode;
 
@@ -54,18 +51,10 @@ public class WorkFlowProgressVO {
      */
     private String handlerMsg;
 
-//    /**
-//     * 前一个流程进度id
-//     */
-//    private Long preFlowProgressId;
-//
-//    /**
-//     * 下一个流程进度id
-//     */
-//    private Long newFlowProgressId;
-
 
     private Timestamp createdAt;
 
     private Timestamp updateAt;
+
+
 }
