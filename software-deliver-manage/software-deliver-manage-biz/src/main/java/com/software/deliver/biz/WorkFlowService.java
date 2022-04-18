@@ -2,6 +2,9 @@ package com.software.deliver.biz;
 
 import com.software.deliver.biz.model.WorkFlow;
 import com.software.deliver.biz.model.WorkFlowNode;
+import com.software.deliver.dal.vo.WorkFlowNodeVO;
+
+import java.util.List;
 
 /**
  * @author wanghao
@@ -21,5 +24,5 @@ public interface WorkFlowService {
 
     WorkFlowNode getBriefStartNode(String workFlowCode);
 
-    WorkFlowNode getBriefNextNode(String workFlowCode);
+    List<WorkFlowNode> getBriefNextNode(String workFlowNodeCode);
 }

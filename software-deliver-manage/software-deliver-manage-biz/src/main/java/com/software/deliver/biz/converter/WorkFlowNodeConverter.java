@@ -8,8 +8,10 @@ import com.software.deliver.dal.vo.WorkFlowNodeRelVO;
 import com.software.deliver.dal.vo.WorkFlowNodeVO;
 import com.software.deliver.dal.vo.WorkFlowVO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author wanghao
@@ -92,5 +94,11 @@ public class WorkFlowNodeConverter {
         return workFlowNode;
     }
 
+    public static List<WorkFlowNode> WorkFlowNodeVOs2WorkFlowNodes(List<WorkFlowNodeVO> workFlowNodeVOS) {
+        return Optional.ofNullable(workFlowNodeVOS)
+                .orElse(new ArrayList<>())
+                .stream().map(WorkFlowNodeConverter::WorkFlowNodeVO2WorkFlowNode)
+                .collect(Collectors.toList());
+    }
 
 }

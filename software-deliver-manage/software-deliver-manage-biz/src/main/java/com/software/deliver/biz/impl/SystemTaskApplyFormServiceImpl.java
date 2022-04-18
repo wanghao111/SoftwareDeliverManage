@@ -16,7 +16,10 @@ import com.software.deliver.dal.vo.SystemTaskApplyFormVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author wanghao
@@ -76,13 +79,12 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         workFlowProgressService.create(workFlowProgress);
 
         //第一个审批人
-        WorkFlowNode briefNextNode = workFlowService.getBriefNextNode(briefStartNode.getWorkFlowNodeCode());
-        workFlowProgress.setFlowNodeCode(briefNextNode.getWorkFlowNodeCode());
+        //只有一个子节点
+        List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(briefStartNode.getWorkFlowNodeCode());
+        workFlowProgress.setFlowNodeCode(briefNextNodes.get(0).getWorkFlowNodeCode());
         workFlowProgress.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
         workFlowProgress.setId(null);
-        //根据节点参数判断下一个节点的处理人userId，可能是多个人
-        //todo:wh 待实现
-        workFlowProgress.setHandlerUserId();
+        workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());
         workFlowProgressService.create(workFlowProgress);
 
         return 1;

@@ -25,6 +25,7 @@ public interface WorkFlowNodeDao {
 
     WorkFlowNodeVO getStartNode(String workFlowCode);
 
-    WorkFlowNodeVO getNextNode(String workFlowCode);
+    List<WorkFlowNodeVO> batchGetByNodeCodes(List<String> workFlowNodeCodes);
+
 
 }

@@ -1,6 +1,7 @@
 package com.software.deliver.dal.mapper;
 
 import com.software.deliver.dal.vo.WorkFlowNodeRelVO;
+import com.software.deliver.dal.vo.WorkFlowNodeVO;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface WorkFlowNodeRelDao {
     int batchInsert(List<WorkFlowNodeRelVO> workFlowNodeRelVOS);
 
     int deleteByWorkFlowId(Long workFlowId);
+
+    List<WorkFlowNodeRelVO> getNextNodeRels(String workFlowNodeCode);
 
 }

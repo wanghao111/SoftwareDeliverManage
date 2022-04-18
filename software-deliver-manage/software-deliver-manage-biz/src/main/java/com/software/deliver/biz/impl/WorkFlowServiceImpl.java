@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author wanghao
@@ -122,8 +123,10 @@ public class WorkFlowServiceImpl implements WorkFlowService {
     }
 
     @Override
-    public WorkFlowNode getBriefNextNode(String workFlowCode) {
-        WorkFlowNodeVO nextNode = workFlowNodeDao.getNextNode(workFlowCode);
-        return WorkFlowNodeConverter.WorkFlowNodeVO2WorkFlowNode(nextNode);
+    public List<WorkFlowNode> getBriefNextNode(String workFlowNodeCode) {
+        List<WorkFlowNodeRelVO> nextNodeRels = workFlowNodeRelDao.getNextNodeRels(workFlowNodeCode);
+        List<String> nextNodeRelCodes = nextNodeRels.stream().map(WorkFlowNodeRelVO::getRelWorkFlowNodeCode).collect(Collectors.toList());
+        List<WorkFlowNodeVO> workFlowNodeVOS = workFlowNodeDao.batchGetByNodeCodes(nextNodeRelCodes);
+        return WorkFlowNodeConverter.WorkFlowNodeVOs2WorkFlowNodes(workFlowNodeVOS);
     }
 }
