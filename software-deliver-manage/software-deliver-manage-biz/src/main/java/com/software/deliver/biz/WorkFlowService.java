@@ -25,4 +25,10 @@ public interface WorkFlowService {
     WorkFlowNode getBriefStartNode(String workFlowCode);
 
     List<WorkFlowNode> getBriefNextNode(String workFlowNodeCode);
+
+    /**
+     * 审批
+     * @return
+     */
+    boolean reviewFlow(String flowInstanceCodeId,String flowNodeCode, Long userId,);
 }

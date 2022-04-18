@@ -88,7 +88,6 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());
         workFlowProgressService.create(workFlowProgress);
 
-        //todo:wh新增节点varName/value
         WorkFlowVariableVO workFlowVariableVO = WorkFlowVariableVO.builder()
                 .workFlowInstanceId(workFlowInstance.getId())
                 .varName(SoftwareBizConstants.WORK_FLOW_NODE_QA_VAR_NAME)
