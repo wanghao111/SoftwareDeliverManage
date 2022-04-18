@@ -8,4 +8,6 @@ package com.software.deliver.biz.constants;
 public class SoftwareBizConstants {
 
     public static String SYSTEM_TASK_APPLY_FORM_FLOW_CODE = "1-1";
+
+    public static String WORK_FLOW_NODE_QA_VAR_NAME = "qaUserId";
 }

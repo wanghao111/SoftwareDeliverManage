@@ -1,5 +1,6 @@
 package com.software.deliver.dal.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
  * @date 2022/4/16 10:28
  */
 @Data
+@Builder
 public class WorkFlowVariableVO {
 
     private long id;

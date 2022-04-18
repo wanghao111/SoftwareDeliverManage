@@ -1,6 +1,7 @@
 package com.software.deliver.biz;
 
 import com.software.deliver.biz.model.WorkFlowInstance;
+import com.software.deliver.dal.vo.WorkFlowVariableVO;
 
 /**
  * @author wanghao
@@ -12,5 +13,5 @@ public interface WorkFlowInstanceService {
 
     int create(WorkFlowInstance workFlowInstance);
 
-
+    int createWorkFlowVariable(WorkFlowVariableVO workFlowVariableVO);
 }

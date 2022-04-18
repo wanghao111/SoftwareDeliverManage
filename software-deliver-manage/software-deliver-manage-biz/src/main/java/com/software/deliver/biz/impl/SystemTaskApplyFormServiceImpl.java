@@ -13,6 +13,7 @@ import com.software.deliver.biz.factory.BizExceptionFactory;
 import com.software.deliver.biz.model.*;
 import com.software.deliver.dal.mapper.SystemTaskApplyFormDao;
 import com.software.deliver.dal.vo.SystemTaskApplyFormVO;
+import com.software.deliver.dal.vo.WorkFlowVariableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +87,14 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         workFlowProgress.setId(null);
         workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());
         workFlowProgressService.create(workFlowProgress);
+
+        //todo:wh新增节点varName/value
+        WorkFlowVariableVO workFlowVariableVO = WorkFlowVariableVO.builder()
+                .workFlowInstanceId(workFlowInstance.getId())
+                .varName(SoftwareBizConstants.WORK_FLOW_NODE_QA_VAR_NAME)
+                .value(systemTaskApplyForm.getQaUserId())
+                .build();
+        workFlowInstanceService.createWorkFlowVariable(workFlowVariableVO);
 
         return 1;
     }
