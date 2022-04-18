@@ -17,10 +17,7 @@ import com.software.deliver.dal.vo.WorkFlowVariableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author wanghao
@@ -69,20 +66,20 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         //提交人
         WorkFlowProgress workFlowProgress = WorkFlowProgress.builder()
                 .workFlowId(workFlow.getId())
-                .flowCode(workFlow.getCode())
-                .flowInstanceId(workFlowInstance.getId())
+                .workFlowCode(workFlow.getCode())
+                .workFlowInstanceId(workFlowInstance.getId())
 //                .flowNodeId()
                 .handlerUserId(systemTaskApplyForm.getCreatedBy())
                 .status(WorkFlowProgressStatusEnum.SUBMIT.getStatus())
                 .build();
         WorkFlowNode briefStartNode = workFlowService.getBriefStartNode(workFlow.getCode());
-        workFlowProgress.setFlowNodeCode(briefStartNode.getWorkFlowNodeCode());
+        workFlowProgress.setWorkFlowNodeCode(briefStartNode.getWorkFlowNodeCode());
         workFlowProgressService.create(workFlowProgress);
 
         //第一个审批人
         //只有一个子节点
         List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(briefStartNode.getWorkFlowNodeCode());
-        workFlowProgress.setFlowNodeCode(briefNextNodes.get(0).getWorkFlowNodeCode());
+        workFlowProgress.setWorkFlowNodeCode(briefNextNodes.get(0).getWorkFlowNodeCode());
         workFlowProgress.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
         workFlowProgress.setId(null);
         workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());

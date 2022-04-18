@@ -1,5 +1,6 @@
 package com.software.deliver.biz;
 
+import com.software.deliver.biz.dto.WorkFlowReviewDTO;
 import com.software.deliver.biz.model.WorkFlow;
 import com.software.deliver.biz.model.WorkFlowNode;
 import com.software.deliver.dal.vo.WorkFlowNodeVO;
@@ -30,5 +31,5 @@ public interface WorkFlowService {
      * 审批
      * @return
      */
-    boolean reviewFlow(String flowInstanceCodeId,String flowNodeCode, Long userId,);
+    boolean reviewFlow(WorkFlowReviewDTO workFlowReviewDTO);
 }

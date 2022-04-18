@@ -18,14 +18,14 @@ public class WorkFlowProgress {
 
     private long workFlowId;
 
-    private String flowCode;
+    private String workFlowCode;
 
-    private String flowNodeCode;
+    private String workFlowNodeCode;
 
     /**
      * 流程实例id
      */
-    private Long flowInstanceId;
+    private Long workFlowInstanceId;
 
     /**
      * 当前处理人id

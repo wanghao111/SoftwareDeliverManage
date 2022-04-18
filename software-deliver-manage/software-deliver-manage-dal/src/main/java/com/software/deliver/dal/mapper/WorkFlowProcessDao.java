@@ -10,4 +10,6 @@ import com.software.deliver.dal.vo.WorkFlowProgressVO;
 public interface WorkFlowProcessDao {
 
     int create(WorkFlowProgressVO workFlowProgressVO);
+
+    WorkFlowProgressVO getByFlowProgressId(Long workFlowProgressId);
 }

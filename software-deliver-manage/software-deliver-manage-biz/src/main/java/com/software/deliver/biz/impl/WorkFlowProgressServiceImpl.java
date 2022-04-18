@@ -29,4 +29,10 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
         workFlowProgress.setId(workFlowProgressVO.getId());
         return 1;
     }
+
+    @Override
+    public WorkFlowProgress getByFlowProgressId(Long workFlowProgressId) {
+        WorkFlowProgressVO workFlowProgressVO= workFlowProcessDao.getByFlowProgressId(workFlowProgressId);
+        return WorkFlowProgressConverter.from(workFlowProgressVO);
+    }
 }

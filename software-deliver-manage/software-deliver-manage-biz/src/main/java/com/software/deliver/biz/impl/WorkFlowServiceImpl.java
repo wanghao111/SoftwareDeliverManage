@@ -3,6 +3,7 @@ package com.software.deliver.biz.impl;
 import com.software.deliver.biz.WorkFlowService;
 import com.software.deliver.biz.converter.WorkFlowConverter;
 import com.software.deliver.biz.converter.WorkFlowNodeConverter;
+import com.software.deliver.biz.dto.WorkFlowReviewDTO;
 import com.software.deliver.biz.enums.WorkFlowEnableEnum;
 import com.software.deliver.biz.model.WorkFlow;
 import com.software.deliver.biz.model.WorkFlowNode;
@@ -128,5 +129,19 @@ public class WorkFlowServiceImpl implements WorkFlowService {
         List<String> nextNodeRelCodes = nextNodeRels.stream().map(WorkFlowNodeRelVO::getRelWorkFlowNodeCode).collect(Collectors.toList());
         List<WorkFlowNodeVO> workFlowNodeVOS = workFlowNodeDao.batchGetByNodeCodes(nextNodeRelCodes);
         return WorkFlowNodeConverter.WorkFlowNodeVOs2WorkFlowNodes(workFlowNodeVOS);
+    }
+
+    @Override
+    public boolean reviewFlow(WorkFlowReviewDTO workFlowReviewDTO) {
+        //todo:wh待实现
+        Long flowInstanceId = workFlowReviewDTO.getFlowInstanceId();
+        String flowNodeCode = workFlowReviewDTO.getFlowNodeCode();
+        Integer reviewActionType = workFlowReviewDTO.getReviewActionType();
+
+
+
+
+
+        return false;
     }
 }

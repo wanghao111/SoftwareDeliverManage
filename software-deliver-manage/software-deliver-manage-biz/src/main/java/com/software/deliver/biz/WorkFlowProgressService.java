@@ -11,5 +11,5 @@ public interface WorkFlowProgressService {
 
     int create(WorkFlowProgress workFlowProgress);
 
-
+    WorkFlowProgress getByFlowProgressId(Long workFlowProgressId);
 }

@@ -15,12 +15,29 @@ public class WorkFlowProgressConverter {
         return WorkFlowProgressVO.builder()
                 .id(workFlowProgress.getId())
                 .workFlowId(workFlowProgress.getWorkFlowId())
-                .flowCode(workFlowProgress.getFlowCode())
-                .flowInstanceId(workFlowProgress.getFlowInstanceId())
-                .flowNodeId(workFlowProgress.getFlowNodeId())
+                .workFlowCode(workFlowProgress.getWorkFlowCode())
+                .workFlowInstanceId(workFlowProgress.getWorkFlowInstanceId())
+                .flowNodeCode(workFlowProgress.getWorkFlowNodeCode())
                 .handlerUserId(workFlowProgress.getHandlerUserId())
                 .status(workFlowProgress.getStatus())
                 .handlerMsg(workFlowProgress.getHandlerMsg())
+                .createdAt(workFlowProgress.getCreatedAt())
+                .updateAt(workFlowProgress.getUpdateAt())
+                .build();
+    }
+
+    public static WorkFlowProgress from(WorkFlowProgressVO workFlowProgressVO) {
+        return WorkFlowProgress.builder()
+                .id(workFlowProgressVO.getId())
+                .workFlowId(workFlowProgressVO.getWorkFlowId())
+                .workFlowCode(workFlowProgressVO.getWorkFlowCode())
+                .workFlowNodeCode(workFlowProgressVO.getFlowNodeCode())
+                .workFlowInstanceId(workFlowProgressVO.getWorkFlowInstanceId())
+                .status(workFlowProgressVO.getStatus())
+                .handlerUserId(workFlowProgressVO.getHandlerUserId())
+                .handlerMsg(workFlowProgressVO.getHandlerMsg())
+                .createdAt(workFlowProgressVO.getCreatedAt())
+                .updateAt(workFlowProgressVO.getUpdateAt())
                 .build();
     }
 

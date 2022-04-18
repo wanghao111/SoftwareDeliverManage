@@ -19,7 +19,7 @@ public class WorkFlowProgressVO {
 
     private long workFlowId;
 
-    private String flowCode;
+    private String workFlowCode;
 
 //    private long flowNodeId;
 
@@ -28,7 +28,7 @@ public class WorkFlowProgressVO {
     /**
      * 流程实例id
      */
-    private Long flowInstanceId;
+    private Long workFlowInstanceId;
 
     /**
      * 当前处理人id
