@@ -23,9 +23,11 @@ public interface WorkFlowNodeDao {
 
 //    int update(WorkFlowNodeVO workFlowNodeVO);
 
-    WorkFlowNodeVO getStartNode(String workFlowCode);
+    WorkFlowNodeVO getStartNodeByFlowCode(String workFlowCode);
 
-    List<WorkFlowNodeVO> batchGetByNodeCodes(List<String> workFlowNodeCodes);
+    List<WorkFlowNodeVO> batchGetByNodeCodes(Long workFlowId, List<String> workFlowNodeCodes);
+
+    WorkFlowNodeVO getByNodeCode(Long workFlowId, String workFlowNodeCode);
 
 
 }

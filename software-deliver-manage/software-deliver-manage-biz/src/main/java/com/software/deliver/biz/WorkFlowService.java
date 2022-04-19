@@ -25,11 +25,11 @@ public interface WorkFlowService {
 
     WorkFlowNode getBriefStartNode(String workFlowCode);
 
-    List<WorkFlowNode> getBriefNextNode(String workFlowNodeCode);
+    List<WorkFlowNode> getBriefNextNode(Long workFlowId, String workFlowNodeCode);
 
     /**
      * 审批
      * @return
      */
-    boolean reviewFlow(WorkFlowReviewDTO workFlowReviewDTO);
+    boolean reviewFlow(WorkFlowReviewDTO workFlowReviewDTO) throws Exception;
 }

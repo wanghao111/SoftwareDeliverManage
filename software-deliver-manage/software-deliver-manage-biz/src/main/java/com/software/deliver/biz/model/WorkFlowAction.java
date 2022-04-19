@@ -18,7 +18,18 @@ public class WorkFlowAction {
     /**
      * 流程节点
      */
-    private long workFlowNodeId;
+    /**
+     * 0:无意义，默认
+     * 1:同意
+     * 2:驳回
+     * 3:加签
+     * 4:转办
+     *
+     */
+
+    private Integer reviewType;
+
+    private String workFlowNodeCode;
     /**
      * 0:无意义，默认
      * 1:同意，流转至下一个节点

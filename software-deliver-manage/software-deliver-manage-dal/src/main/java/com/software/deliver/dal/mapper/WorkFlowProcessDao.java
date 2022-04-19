@@ -12,4 +12,6 @@ public interface WorkFlowProcessDao {
     int create(WorkFlowProgressVO workFlowProgressVO);
 
     WorkFlowProgressVO getByFlowProgressId(Long workFlowProgressId);
+
+    int update(WorkFlowProgressVO workFlowProgressVO);
 }

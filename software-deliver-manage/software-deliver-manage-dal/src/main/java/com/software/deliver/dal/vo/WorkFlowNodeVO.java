@@ -17,9 +17,15 @@ public class WorkFlowNodeVO {
 
     private long id;
 
-    private String workFlowNodeCode;
+    /**
+     * 节点code
+     */
+    private String code;
 
-    private String workFlowNodeTitle;
+    /**
+     * 节点标题
+     */
+    private String nodeTitle;
 
     private long workFlowId;
 

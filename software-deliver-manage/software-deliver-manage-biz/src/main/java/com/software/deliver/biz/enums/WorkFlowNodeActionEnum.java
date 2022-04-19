@@ -16,7 +16,7 @@ public enum WorkFlowNodeActionEnum {
     REJECT_TO_PRE(2, "驳回至上一个节点"),
     REJECT_TO_SUBMIT(3, "驳回至提交人"),
     ADD_SIGN(4,"加签"),
-    transfer(5, "转办")
+    TRANSFER(5, "转办")
     ;
     private Integer type;
 

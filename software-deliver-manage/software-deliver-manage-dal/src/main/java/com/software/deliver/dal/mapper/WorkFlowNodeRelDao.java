@@ -18,6 +18,8 @@ public interface WorkFlowNodeRelDao {
 
     int deleteByWorkFlowId(Long workFlowId);
 
-    List<WorkFlowNodeRelVO> getNextNodeRels(String workFlowNodeCode);
+    List<WorkFlowNodeRelVO> getNextNodeRels(Long workFlowId, String workFlowNodeCode);
+
+    List<WorkFlowNodeRelVO> grePreNodeRels(Long workFlowId, String workFlowNodeCode);
 
 }

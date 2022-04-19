@@ -12,4 +12,6 @@ public interface WorkFlowProgressService {
     int create(WorkFlowProgress workFlowProgress);
 
     WorkFlowProgress getByFlowProgressId(Long workFlowProgressId);
+
+    int update(WorkFlowProgress workFlowProgress);
 }

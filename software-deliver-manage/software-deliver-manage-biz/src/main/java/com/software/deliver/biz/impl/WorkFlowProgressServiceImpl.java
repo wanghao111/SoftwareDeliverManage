@@ -35,4 +35,9 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
         WorkFlowProgressVO workFlowProgressVO= workFlowProcessDao.getByFlowProgressId(workFlowProgressId);
         return WorkFlowProgressConverter.from(workFlowProgressVO);
     }
+
+    @Override
+    public int update(WorkFlowProgress workFlowProgress) {
+        return workFlowProcessDao.update(WorkFlowProgressConverter.from(workFlowProgress));
+    }
 }

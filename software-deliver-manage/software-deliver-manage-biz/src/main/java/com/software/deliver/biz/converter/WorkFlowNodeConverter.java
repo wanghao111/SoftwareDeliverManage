@@ -6,7 +6,6 @@ import com.software.deliver.biz.model.WorkFlowNode;
 import com.software.deliver.dal.vo.WorkFlowNodeActionVO;
 import com.software.deliver.dal.vo.WorkFlowNodeRelVO;
 import com.software.deliver.dal.vo.WorkFlowNodeVO;
-import com.software.deliver.dal.vo.WorkFlowVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +31,10 @@ public class WorkFlowNodeConverter {
                                                  List<WorkFlowNodeActionVO> workFlowNodeActionVOS) {
         WorkFlowNodeVO workFlowNodeVO = WorkFlowNodeVO.builder()
                 .id(workFlowNode.getId())
-                .workFlowNodeCode(workFlowNode.getWorkFlowNodeCode())
+                .code(workFlowNode.getWorkFlowNodeCode())
                 .workFlowId(workFlowNode.getWorkFlowId())
                 .workFlowCode(workFlowNode.getWorkFlowCode())
-                .workFlowNodeTitle(workFlowNode.getWorkFlowNodeTitle())
+                .nodeTitle(workFlowNode.getWorkFlowNodeTitle())
                 .nodeType(workFlowNode.getNodeType())
                 .nodeSeqType(workFlowNode.getNodeSeqType())
                 .handlerType(workFlowNode.getHandlerType())
@@ -70,8 +69,9 @@ public class WorkFlowNodeConverter {
             WorkFlowNodeActionVO workFlowNodeActionVO = WorkFlowNodeActionVO.builder()
                     .id(action.getId())
                     .actionType(action.getActionType())
-                    .workFlowNodeId(action.getWorkFlowNodeId())
+                    .workFlowNodeCode(action.getWorkFlowNodeCode())
                     .workFlowId(action.getWorkFlowId())
+                    .reviewType(action.getReviewType())
                     .build();
             workFlowNodeActionVOS.add(workFlowNodeActionVO);
         }));
@@ -81,14 +81,14 @@ public class WorkFlowNodeConverter {
     public static WorkFlowNode WorkFlowNodeVO2WorkFlowNode(WorkFlowNodeVO workFlowNodeVO) {
         WorkFlowNode workFlowNode = WorkFlowNode.builder()
                 .id(workFlowNodeVO.getId())
-                .workFlowNodeCode(workFlowNodeVO.getWorkFlowNodeCode())
+                .workFlowNodeCode(workFlowNodeVO.getCode())
                 .nodeSeqType(workFlowNodeVO.getNodeSeqType())
                 .handlerType(workFlowNodeVO.getHandlerType())
                 .summaryType(workFlowNodeVO.getSummaryType())
                 .nodeType(workFlowNodeVO.getNodeType())
                 .workFlowId(workFlowNodeVO.getWorkFlowId())
                 .workFlowCode(workFlowNodeVO.getWorkFlowCode())
-                .workFlowNodeTitle(workFlowNodeVO.getWorkFlowNodeTitle())
+                .workFlowNodeTitle(workFlowNodeVO.getNodeTitle())
                 .varName(workFlowNodeVO.getVarName())
                 .build();
         return workFlowNode;

@@ -42,6 +42,7 @@ public class WorkFlowProgress {
      * 4:驳回
      * 5:加签
      * 6:转办
+     * @see WorkFlowProgressStatusEnum
      */
     private Integer status;
 

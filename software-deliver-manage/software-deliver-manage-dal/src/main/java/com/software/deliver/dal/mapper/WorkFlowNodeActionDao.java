@@ -11,10 +11,9 @@ import java.util.List;
  */
 public interface WorkFlowNodeActionDao {
 
-//    int create(WorkFlowNodeActionVO workFlowNodeActionVO);
-
     int batchInsert(List<WorkFlowNodeActionVO> workFlowNodeActionVOS);
 
     int deleteByWorkFlowId(Long workFlowId);
 
+    WorkFlowNodeActionVO get(String workFlowNodeCode, Integer reviewType);
 }

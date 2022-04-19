@@ -7,11 +7,11 @@ import lombok.Data;
 @Builder
 public class WorkFlowReviewDTO {
 
-    private Long flowInstanceId;
+    private Long workFlowInstanceId;
 
-    private String flowNodeCode;
+    private String workFlowNodeCode;
 
-    private Long flowProgressId;
+    private Long workFlowProgressId;
 
     private Long userId;
 
