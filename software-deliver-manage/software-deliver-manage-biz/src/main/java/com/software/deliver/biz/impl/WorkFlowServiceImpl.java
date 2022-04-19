@@ -7,9 +7,11 @@ import com.software.deliver.biz.converter.WorkFlowNodeConverter;
 import com.software.deliver.biz.dto.WorkFlowReviewDTO;
 import com.software.deliver.biz.enums.*;
 import com.software.deliver.biz.factory.BizExceptionFactory;
+import com.software.deliver.biz.factory.WorkFlowNodeActionProcessorFactory;
 import com.software.deliver.biz.model.WorkFlow;
 import com.software.deliver.biz.model.WorkFlowNode;
 import com.software.deliver.biz.model.WorkFlowProgress;
+import com.software.deliver.biz.processor.WorkFlowNodeActionProcessorBase;
 import com.software.deliver.dal.mapper.WorkFlowDao;
 import com.software.deliver.dal.mapper.WorkFlowNodeActionDao;
 import com.software.deliver.dal.mapper.WorkFlowNodeDao;
@@ -23,9 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -142,27 +142,26 @@ public class WorkFlowServiceImpl implements WorkFlowService {
     public boolean reviewFlow(WorkFlowReviewDTO workFlowReviewDTO) throws Exception {
         Long flowInstanceId = workFlowReviewDTO.getWorkFlowInstanceId();
         String flowNodeCode = workFlowReviewDTO.getWorkFlowNodeCode();
-        Integer reviewActionType = workFlowReviewDTO.getReviewActionType();
+        Integer reviewType = workFlowReviewDTO.getReviewType();
         Long workFlowProgressId = workFlowReviewDTO.getWorkFlowProgressId();
 
-        WorkFlowNodeActionVO workFlowNodeActionVO = workFlowNodeActionDao.get(flowNodeCode, reviewActionType);
+        WorkFlowNodeActionVO workFlowNodeActionVO = workFlowNodeActionDao.get(flowNodeCode, reviewType);
         Integer actionType = workFlowNodeActionVO.getActionType();
 
         //更新当前审批节点状态
         WorkFlowProgress currentProgress = workFlowProgressService.getByFlowProgressId(workFlowProgressId);
         Integer progressStatus;
-        if (WorkFlowNodeReviewTypeEnum.APPROVE.getType().equals(reviewActionType)) {
+        if (WorkFlowNodeReviewTypeEnum.APPROVE.getType().equals(reviewType)) {
             progressStatus = WorkFlowProgressStatusEnum.AGREE.getStatus();
-        } else if (WorkFlowNodeReviewTypeEnum.REJECT.getType().equals(reviewActionType)) {
+        } else if (WorkFlowNodeReviewTypeEnum.REJECT.getType().equals(reviewType)) {
             progressStatus = WorkFlowProgressStatusEnum.REJECT.getStatus();
-        } else if (WorkFlowNodeReviewTypeEnum.ADD_SIGN.getType().equals(reviewActionType)) {
+        } else if (WorkFlowNodeReviewTypeEnum.ADD_SIGN.getType().equals(reviewType)) {
             progressStatus = WorkFlowProgressStatusEnum.ADD_SIGN.getStatus();
-        } else if (WorkFlowNodeReviewTypeEnum.transfer.getType().equals(reviewActionType)) {
+        } else if (WorkFlowNodeReviewTypeEnum.transfer.getType().equals(reviewType)) {
             progressStatus = WorkFlowProgressStatusEnum.TRANSFER.getStatus();
         } else {
             throw BizExceptionFactory.build(BizExceptionEnum.WORK_FLOW_REVIEW_TYPE_ILLEGAL);
         }
-
 
         currentProgress.setStatus(progressStatus);
         workFlowProgressService.update(currentProgress);
@@ -172,21 +171,8 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 
         //新增下一个节点审批进度
         //判断是否为最后一个节点
-        //todo:wh待实现
-        List<WorkFlowNodeRelVO> nextNodeRels = workFlowNodeRelDao.getNextNodeRels(currentProgress.getWorkFlowId(), workFlowReviewDTO.getWorkFlowNodeCode());
-        List<WorkFlowNodeRelVO> preNodeRels = workFlowNodeRelDao.grePreNodeRels(currentProgress.getWorkFlowId(), workFlowReviewDTO.getWorkFlowNodeCode());
-        if (WorkFlowNodeActionEnum.APPROVE.getType().equals(actionType)) {
-            nextNodeRels,flowInstanceId,workFlowNodeDao,workFlowProgressService,
-        } else if (WorkFlowNodeActionEnum.REJECT_TO_PRE.getType().equals(actionType)) {
-
-        } else if (WorkFlowNodeActionEnum.REJECT_TO_SUBMIT.getType().equals(actionType)) {
-
-        } else if (WorkFlowNodeActionEnum.ADD_SIGN.getType().equals(actionType)) {
-
-        } else if (WorkFlowNodeActionEnum.TRANSFER.getType().equals(actionType)) {
-
-        }
-
-        return true;
+        WorkFlowNodeActionEnum actionEnum = WorkFlowNodeActionEnum.fromType(actionType);
+        WorkFlowNodeActionProcessorBase processorBase = WorkFlowNodeActionProcessorFactory.build(actionType);
+        return processorBase.doProcess(currentProgress.getWorkFlowId(),flowInstanceId,flowNodeCode, workFlowNodeDao, workFlowProgressService);
     }
 }

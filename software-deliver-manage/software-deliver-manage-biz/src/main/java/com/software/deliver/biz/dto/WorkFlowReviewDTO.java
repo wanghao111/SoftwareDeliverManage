@@ -21,7 +21,7 @@ public class WorkFlowReviewDTO {
      * 3:加签
      * 4:转办
      */
-    private Integer reviewActionType;
+    private Integer reviewType;
 
     /**
      * 加签指定的人
