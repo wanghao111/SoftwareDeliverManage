@@ -1,6 +1,9 @@
 package com.software.deliver.biz;
 
 import com.software.deliver.biz.model.WorkFlowProgress;
+import com.software.deliver.dal.vo.WorkFlowProgressRelVO;
+
+import java.util.List;
 
 /**
  * @author wanghao
@@ -14,4 +17,14 @@ public interface WorkFlowProgressService {
     WorkFlowProgress getByFlowProgressId(Long workFlowProgressId);
 
     int update(WorkFlowProgress workFlowProgress);
+
+    int batchUpdate(List<WorkFlowProgress> workFlowProgresses);
+
+    List<WorkFlowProgress> batchGetByNodeCode(Long workFlowId, List<String> workFlowNodeCodes);
+
+    int batchCreateFlowProgressRels(List<WorkFlowProgressRelVO> workFlowProgressRelVOS);
+
+    List<WorkFlowProgressRelVO> batchGetFlowProgressRels(Long workFlowProgressId, Integer type);
+
+    List<WorkFlowProgress> batchGetFlowProgresses(List<Long> workFlowProgressIds);
 }

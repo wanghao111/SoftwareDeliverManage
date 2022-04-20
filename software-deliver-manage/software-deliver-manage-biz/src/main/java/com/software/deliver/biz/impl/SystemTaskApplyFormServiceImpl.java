@@ -8,15 +8,18 @@ import com.software.deliver.biz.constants.SoftwareBizConstants;
 import com.software.deliver.biz.converter.SystemTaskApplyFormConverter;
 import com.software.deliver.biz.enums.BizExceptionEnum;
 import com.software.deliver.biz.enums.WorkFlowEnableEnum;
+import com.software.deliver.biz.enums.WorkFlowNodeRelTypeEnum;
 import com.software.deliver.biz.enums.WorkFlowProgressStatusEnum;
 import com.software.deliver.biz.factory.BizExceptionFactory;
 import com.software.deliver.biz.model.*;
 import com.software.deliver.dal.mapper.SystemTaskApplyFormDao;
 import com.software.deliver.dal.vo.SystemTaskApplyFormVO;
+import com.software.deliver.dal.vo.WorkFlowProgressRelVO;
 import com.software.deliver.dal.vo.WorkFlowVariableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -75,6 +78,7 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         WorkFlowNode briefStartNode = workFlowService.getBriefStartNode(workFlow.getCode());
         workFlowProgress.setWorkFlowNodeCode(briefStartNode.getWorkFlowNodeCode());
         workFlowProgressService.create(workFlowProgress);
+        Long currentFlowProgressId = workFlowProgress.getId();
 
         //第一个审批人
         //只有一个子节点
@@ -84,6 +88,22 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
         workFlowProgress.setId(null);
         workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());
         workFlowProgressService.create(workFlowProgress);
+        Long nextFlowProgressId = workFlowProgress.getId();
+
+        //处理progress rel
+        WorkFlowProgressRelVO currentFlowProgressRel = WorkFlowProgressRelVO.builder()
+                .workFlowInstanceId(workFlowInstance.getId())
+                .workFlowProgressId(currentFlowProgressId)
+                .workFlowProgressRelId(nextFlowProgressId)
+                .type(WorkFlowNodeRelTypeEnum.NEXT_NODE.getType())
+                .build();
+        WorkFlowProgressRelVO nextFlowProgressRel = WorkFlowProgressRelVO.builder()
+                .workFlowInstanceId(workFlowInstance.getId())
+                .workFlowProgressId(nextFlowProgressId)
+                .workFlowProgressRelId(currentFlowProgressId)
+                .type(WorkFlowNodeRelTypeEnum.PRE_NODE.getType())
+                .build();
+        workFlowProgressService.batchCreateFlowProgressRels(Arrays.asList(currentFlowProgressRel, nextFlowProgressRel));
 
         WorkFlowVariableVO workFlowVariableVO = WorkFlowVariableVO.builder()
                 .workFlowInstanceId(workFlowInstance.getId())

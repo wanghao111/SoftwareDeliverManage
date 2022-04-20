@@ -16,6 +16,6 @@ public class WorkFlowNodeFixedPersonProcessor implements WorkFlowNodeHandlerType
 
     @Override
     public int nodeType() {
-        return WorkFlowNodeHandleTypeEnum.Fixed_person.getType();
+        return WorkFlowNodeHandleTypeEnum.FIXED_PERSON.getType();
     }
 }

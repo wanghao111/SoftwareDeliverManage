@@ -3,6 +3,11 @@ package com.software.deliver.biz.converter;
 import com.software.deliver.biz.model.WorkFlowProgress;
 import com.software.deliver.dal.vo.WorkFlowProgressVO;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 /**
  * @author wanghao
  * @version 1.0
@@ -26,6 +31,10 @@ public class WorkFlowProgressConverter {
                 .build();
     }
 
+    public static List<WorkFlowProgressVO> batchFrom(List<WorkFlowProgress> workFlowProgresses) {
+        return Optional.ofNullable(workFlowProgresses).orElse(new ArrayList<>())
+                .stream().map(WorkFlowProgressConverter::from).collect(Collectors.toList());
+    }
     public static WorkFlowProgress from(WorkFlowProgressVO workFlowProgressVO) {
         return WorkFlowProgress.builder()
                 .id(workFlowProgressVO.getId())
@@ -39,6 +48,11 @@ public class WorkFlowProgressConverter {
                 .createdAt(workFlowProgressVO.getCreatedAt())
                 .updateAt(workFlowProgressVO.getUpdateAt())
                 .build();
+    }
+
+    public static List<WorkFlowProgress> batchFromVO(List<WorkFlowProgressVO> workFlowProgressVOS) {
+        return Optional.ofNullable(workFlowProgressVOS).orElse(new ArrayList<>())
+                .stream().map(WorkFlowProgressConverter::from).collect(Collectors.toList());
     }
 
 }

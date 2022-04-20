@@ -12,7 +12,7 @@ public class WorkFlowNodePreNodeSupervisorProcessor implements WorkFlowNodeHandl
         param.getCurrentFlowProgressUserId();
 
         //todo:wh 获取当前处理人的主管id，待实现
-        return new ArrayList<>();
+        return new ArrayList<>(1);
     }
 
     @Override
