@@ -7,11 +7,13 @@ import com.software.deliver.biz.converter.WorkFlowNodeConverter;
 import com.software.deliver.biz.dto.WorkFlowReviewDTO;
 import com.software.deliver.biz.enums.*;
 import com.software.deliver.biz.factory.BizExceptionFactory;
+import com.software.deliver.biz.factory.FlowNodeActionProcessParamFactory;
 import com.software.deliver.biz.factory.WorkFlowNodeActionProcessorFactory;
+import com.software.deliver.biz.dto.FlowNodeActionProcessParam;
 import com.software.deliver.biz.model.WorkFlow;
 import com.software.deliver.biz.model.WorkFlowNode;
 import com.software.deliver.biz.model.WorkFlowProgress;
-import com.software.deliver.biz.processor.WorkFlowNodeActionProcessorBase;
+import com.software.deliver.biz.processor.nodereview.WorkFlowNodeActionProcessorBase;
 import com.software.deliver.dal.mapper.WorkFlowDao;
 import com.software.deliver.dal.mapper.WorkFlowNodeActionDao;
 import com.software.deliver.dal.mapper.WorkFlowNodeDao;
@@ -171,8 +173,10 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 
         //新增下一个节点审批进度
         //判断是否为最后一个节点
-        WorkFlowNodeActionEnum actionEnum = WorkFlowNodeActionEnum.fromType(actionType);
         WorkFlowNodeActionProcessorBase processorBase = WorkFlowNodeActionProcessorFactory.build(actionType);
-        return processorBase.doProcess(currentProgress.getWorkFlowId(),flowInstanceId,flowNodeCode, workFlowNodeDao, workFlowProgressService);
+        FlowNodeActionProcessParam param = FlowNodeActionProcessParamFactory.build(currentProgress.getWorkFlowId(),
+                currentProgress.getWorkFlowCode(), flowInstanceId, flowNodeCode,currentProgress.getId(), currentProgress.getHandlerUserId(),
+                workFlowNodeDao, workFlowProgressService, workFlowNodeRelDao);
+        return processorBase.doProcess(param);
     }
 }

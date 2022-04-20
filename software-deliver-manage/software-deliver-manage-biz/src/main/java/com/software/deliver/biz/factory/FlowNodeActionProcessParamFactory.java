@@ -1,8 +1,9 @@
 package com.software.deliver.biz.factory;
 
 import com.software.deliver.biz.WorkFlowProgressService;
-import com.software.deliver.biz.model.FlowNodeActionProcessParam;
+import com.software.deliver.biz.dto.FlowNodeActionProcessParam;
 import com.software.deliver.dal.mapper.WorkFlowNodeDao;
+import com.software.deliver.dal.mapper.WorkFlowNodeRelDao;
 
 /**
  * @author wanghao
@@ -11,15 +12,20 @@ import com.software.deliver.dal.mapper.WorkFlowNodeDao;
  */
 public class FlowNodeActionProcessParamFactory {
 
-    public static FlowNodeActionProcessParam build(Long workFlowId, Long workFlowInstanceId,
-                                                   String currentNodeCode, WorkFlowNodeDao workFlowNodeDao,
-                                                   WorkFlowProgressService workFlowProgressService) {
+    public static FlowNodeActionProcessParam build(Long workFlowId, String workFlowCode, Long workFlowInstanceId,
+                                                   String currentNodeCode, Long currentFlowProgressId, Long currentFLowProcessUserId,
+                                                   WorkFlowNodeDao workFlowNodeDao,
+                                                   WorkFlowProgressService workFlowProgressService, WorkFlowNodeRelDao workFlowNodeRelDao) {
         return FlowNodeActionProcessParam.builder()
                 .workFlowId(workFlowId)
                 .workFlowInstanceId(workFlowInstanceId)
-                .currentNodeCode(currentNodeCode)
+                .workFlowNodeCode(currentNodeCode)
                 .workFlowNodeDao(workFlowNodeDao)
                 .workFlowProgressService(workFlowProgressService)
+                .workFlowNodeRelDao(workFlowNodeRelDao)
+                .workFlowCode(workFlowCode)
+                .currentFlowProgressUserId(currentFLowProcessUserId)
+                .currentFlowProgressId(currentFlowProgressId)
                 .build();
     }
 }

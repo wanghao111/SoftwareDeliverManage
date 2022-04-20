@@ -1,8 +1,7 @@
-package com.software.deliver.biz.processor;
+package com.software.deliver.biz.processor.nodereview;
 
-import com.software.deliver.biz.WorkFlowProgressService;
 import com.software.deliver.biz.enums.WorkFlowNodeActionEnum;
-import com.software.deliver.dal.mapper.WorkFlowNodeDao;
+import com.software.deliver.biz.dto.FlowNodeActionProcessParam;
 
 /**
  * @author wanghao
@@ -12,7 +11,7 @@ import com.software.deliver.dal.mapper.WorkFlowNodeDao;
 public class WorkFlowNodeAddSignProcessor implements WorkFlowNodeActionProcessorBase{
 
     @Override
-    public boolean doProcess(Long workFlowId, Long workFlowInstanceId, String currentNodeCode, WorkFlowNodeDao workFlowNodeDao, WorkFlowProgressService workFlowProgressService) {
+    public boolean doProcess(FlowNodeActionProcessParam param) {
         //todo:wh待实现
         return false;
     }

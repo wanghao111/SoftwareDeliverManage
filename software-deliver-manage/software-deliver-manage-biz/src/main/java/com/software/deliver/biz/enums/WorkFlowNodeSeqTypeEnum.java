@@ -19,7 +19,7 @@ public enum WorkFlowNodeSeqTypeEnum {
 
     private String msg;
 
-    private WorkFlowNodeSeqTypeEnum(Integer type, String msg) {
+    WorkFlowNodeSeqTypeEnum(Integer type, String msg) {
         this.type = type;
         this.msg = msg;
     }

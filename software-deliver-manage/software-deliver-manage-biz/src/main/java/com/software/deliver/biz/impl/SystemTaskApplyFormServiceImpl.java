@@ -78,7 +78,7 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
 
         //第一个审批人
         //只有一个子节点
-        List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(briefStartNode.getWorkFlowNodeCode());
+        List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(workFlow.getId(), briefStartNode.getWorkFlowNodeCode());
         workFlowProgress.setWorkFlowNodeCode(briefNextNodes.get(0).getWorkFlowNodeCode());
         workFlowProgress.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
         workFlowProgress.setId(null);

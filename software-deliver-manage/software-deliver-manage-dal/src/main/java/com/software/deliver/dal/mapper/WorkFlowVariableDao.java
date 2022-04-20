@@ -11,4 +11,6 @@ public interface WorkFlowVariableDao {
 
     int create(WorkFlowVariableVO workFlowVariableVO);
 
+    WorkFlowVariableVO getByVarName(String varName);
+
 }

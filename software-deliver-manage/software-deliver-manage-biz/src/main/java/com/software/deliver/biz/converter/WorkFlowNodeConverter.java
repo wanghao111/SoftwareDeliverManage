@@ -40,6 +40,7 @@ public class WorkFlowNodeConverter {
                 .handlerType(workFlowNode.getHandlerType())
                 .summaryType(workFlowNode.getSummaryType())
                 .varName(workFlowNode.getVarName())
+                .handlerUserId(workFlowNode.getHandlerUserId())
                 .build();
 
         List<String> preWorkFlowNodeCodes = workFlowNode.getPreWorkFlowNodeCodes();
@@ -90,6 +91,7 @@ public class WorkFlowNodeConverter {
                 .workFlowCode(workFlowNodeVO.getWorkFlowCode())
                 .workFlowNodeTitle(workFlowNodeVO.getNodeTitle())
                 .varName(workFlowNodeVO.getVarName())
+                .handlerUserId(workFlowNodeVO.getHandlerUserId())
                 .build();
         return workFlowNode;
     }

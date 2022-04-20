@@ -35,9 +35,9 @@ public class WorkFlowNode {
     private Integer handlerType;
 
     /**
-     * handlerType=1，必须指定handlerUserId
+     * handlerType=2，必须指定handlerUserId
      */
-//    private Long handlerUserId;
+    private Long handlerUserId;
 
     /**
      * 流程节点处理人变量名称
