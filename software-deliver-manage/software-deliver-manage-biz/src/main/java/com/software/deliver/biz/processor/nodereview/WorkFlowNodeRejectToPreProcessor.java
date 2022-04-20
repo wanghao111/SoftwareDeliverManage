@@ -36,6 +36,7 @@ public class WorkFlowNodeRejectToPreProcessor implements WorkFlowNodeActionProce
                 .stream()
                 .peek(workFlowProgressVO -> workFlowProgressVO.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus()))
                 .collect(Collectors.toList());
+        //todo:wh batchCreate progress record
         workFlowProgressService.batchUpdate(needUpdateFlowProgresses);
         return true;
     }

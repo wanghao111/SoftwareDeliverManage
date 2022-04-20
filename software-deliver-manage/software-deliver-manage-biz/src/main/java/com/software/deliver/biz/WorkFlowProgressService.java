@@ -27,4 +27,7 @@ public interface WorkFlowProgressService {
     List<WorkFlowProgressRelVO> batchGetFlowProgressRels(Long workFlowProgressId, Integer type);
 
     List<WorkFlowProgress> batchGetFlowProgresses(List<Long> workFlowProgressIds);
+
+    //查找第一个创建的progressId
+    WorkFlowProgress getSubmitWorkFlowProgress(Long workFlowInstanceId);
 }
