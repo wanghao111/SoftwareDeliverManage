@@ -9,7 +9,7 @@ import com.software.deliver.dal.vo.WorkFlowInstanceVO;
  */
 public interface WorkFlowInstanceDao {
 
-    //todo:wh instancedao.create需要设置返回主键
+    //todo:wh instancedao.create
     int create(WorkFlowInstanceVO workFlowInstanceVO);
 
 

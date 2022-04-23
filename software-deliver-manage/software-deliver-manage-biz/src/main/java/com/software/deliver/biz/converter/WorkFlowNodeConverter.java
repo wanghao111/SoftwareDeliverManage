@@ -31,7 +31,7 @@ public class WorkFlowNodeConverter {
                                                  List<WorkFlowNodeActionVO> workFlowNodeActionVOS) {
         WorkFlowNodeVO workFlowNodeVO = WorkFlowNodeVO.builder()
                 .id(workFlowNode.getId())
-                .code(workFlowNode.getWorkFlowNodeCode())
+                .code(workFlowNode.getCode())
                 .workFlowId(workFlowNode.getWorkFlowId())
                 .workFlowCode(workFlowNode.getWorkFlowCode())
                 .nodeTitle(workFlowNode.getWorkFlowNodeTitle())
@@ -49,6 +49,7 @@ public class WorkFlowNodeConverter {
         Optional.ofNullable(preWorkFlowNodeCodes).ifPresent(preCodes->preCodes.forEach(preCode->{
             WorkFlowNodeRelVO workFlowNodeRelVO = WorkFlowNodeRelVO.builder()
                     .workFlowNodeId(workFlowNode.getId())
+                    .workFlowNodeCode(workFlowNode.getCode())
                     .workFlowId(workFlowNode.getWorkFlowId())
                     .relWorkFlowNodeCode(preCode)
                     .type(WorkFlowNodeRelTypeEnum.PRE_NODE.getType())
@@ -59,6 +60,7 @@ public class WorkFlowNodeConverter {
         Optional.ofNullable(nextWorkFlowNodeCodes).ifPresent(nextCodes->nextCodes.forEach(nextCode->{
             WorkFlowNodeRelVO workFlowNodeRelVO = WorkFlowNodeRelVO.builder()
                     .workFlowNodeId(workFlowNode.getId())
+                    .workFlowNodeCode(workFlowNode.getCode())
                     .relWorkFlowNodeCode(nextCode)
                     .type(WorkFlowNodeRelTypeEnum.NEXT_NODE.getType())
                     .build();
@@ -82,7 +84,7 @@ public class WorkFlowNodeConverter {
     public static WorkFlowNode WorkFlowNodeVO2WorkFlowNode(WorkFlowNodeVO workFlowNodeVO) {
         WorkFlowNode workFlowNode = WorkFlowNode.builder()
                 .id(workFlowNodeVO.getId())
-                .workFlowNodeCode(workFlowNodeVO.getCode())
+                .code(workFlowNodeVO.getCode())
                 .nodeSeqType(workFlowNodeVO.getNodeSeqType())
                 .handlerType(workFlowNodeVO.getHandlerType())
                 .summaryType(workFlowNodeVO.getSummaryType())

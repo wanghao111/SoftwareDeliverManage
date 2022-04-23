@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowNodeDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowNodeVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="node_title" jdbcType="VARCHAR" property="nodeTitle" />
+        <result column="work_flow_id" jdbcType="BIGINT" property="workFlowId" />
+        <result column="work_flow_code" jdbcType="VARCHAR" property="workFlowCode" />
+        <result column="handler_type" jdbcType="TINYINT" property="handlerType" />
+        <result column="handler_user_id" jdbcType="BIGINT" property="handlerUserId" />
+        <result column="var_name" jdbcType="VARCHAR" property="varName" />
+        <result column="node_type" jdbcType="TINYINT" property="nodeType" />
+        <result column="summary_type" jdbcType="TINYINT" property="summaryType" />
+        <result column="node_seq_type" jdbcType="TINYINT" property="nodeSeqType" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_node
+    </sql>
+
+    <sql id="batch_get_by_codes">
+        <foreach collection="nodeCodes" item="code" index="index" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </sql>
+
+    <sql id="batch_insert_field">code,node_title,work_flow_id,work_flow_code,handler_type,handler_user_id,var_name,node_type,summary_type,node_seq_type</sql>
+
+    <sql id="batch_insert_value">
+        <foreach collection="workFlowNodeVOs" index="index" item="nodeVo" separator="," open="(" close=")" >
+            (#{nodeVo.code},#{nodeVo.nodeTitle},#{nodeVo.workFlowId},#{nodeVo.workFlowCode},#{nodeVo.handlerType},#{nodeVo.handlerUserId},#{nodeVo.varName},#{nodeVo.nodeType}
+            ,#{nodeVo.summaryType},#{nodeVo.nodeSeqType})
+        </foreach>
+    </sql>
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
+
+    <update id="deleteByWorkFlowId">
+        delete from <include refid="table_name"/> where work_flow_id = #{workFlowId}
+    </update>
+
+    <select id="getStartNodeByFlowCode" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_code = #{workFlowCode} order by id asc limit 1
+    </select>
+
+    <select id="batchGetByNodeCodes">
+        select * from <include refid="table_name"/> where work_flow_id = #{workFlowId} and code in
+        <include refid="batch_get_by_codes"/>
+    </select>
+
+    <select id="getByCode" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_id = #{workFlowId} and code = #{workFlowNodeCode} limit 1
+    </select>
+</mapper>

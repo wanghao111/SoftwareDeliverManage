@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowNodeActionDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowNodeActionVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_flow_id" jdbcType="BIGINT" property="workFlowId" />
+        <result column="work_flow_node_code" jdbcType="VARCHAR" property="workFlowNodeCode" />
+        <result column="review_type" jdbcType="TINYINT" property="reviewType" />
+        <result column="action_type" jdbcType="TINYINT" property="actionType" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_node_action
+    </sql>
+
+    <sql id="batch_insert_field">work_flow_id,work_flow_node_code,review_type,action_type</sql>
+
+    <sql id="batch_insert_value">
+        <foreach collection="nodeActions" index="index" item="nodeAction" separator="," open="(" close=")" >
+            (#{nodeAction.workFlowId},#{nodeAction.workFlowNodeCode},#{nodeAction.reviewType},#{nodeAction.actionType}
+        </foreach>
+    </sql>
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
+
+    <delete id="deleteByWorkFlowId">
+        delete from <include refid="table_name"/> where work_flow_id = #{workFlowId}
+    </delete>
+
+    <select id="get">
+        select * from <include refid="table_name"/> where work_flow_node_code = #{workFlowNodeCode} and review_type = #{reviewType} limit 1
+    </select>
+</mapper>

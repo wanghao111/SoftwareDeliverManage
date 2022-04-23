@@ -28,6 +28,14 @@ public class WorkFlowVO {
      */
     private Integer isEnable;
 
+    /**
+     * 状态
+     * 1:审批中
+     * 2:已完成
+     * 3:已退回
+     */
+    private Integer status;//todo:wh赋值、逻辑处理待补充
+
     private Timestamp createdAt;
 
     private Timestamp updateAt;

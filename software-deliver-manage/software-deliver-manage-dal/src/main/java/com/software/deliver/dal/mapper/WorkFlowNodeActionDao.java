@@ -1,6 +1,7 @@
 package com.software.deliver.dal.mapper;
 
 import com.software.deliver.dal.vo.WorkFlowNodeActionVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface WorkFlowNodeActionDao {
 
-    int batchInsert(List<WorkFlowNodeActionVO> workFlowNodeActionVOS);
+    int batchInsert(@Param("nodeActions") List<WorkFlowNodeActionVO> workFlowNodeActionVOS);
 
     int deleteByWorkFlowId(Long workFlowId);
 

@@ -21,10 +21,6 @@ public interface WorkFlowProgressService {
 
     int update(WorkFlowProgress workFlowProgress);
 
-    int batchUpdate(List<WorkFlowProgress> workFlowProgresses);
-
-    List<WorkFlowProgress> batchGetByNodeCode(Long workFlowId, List<String> workFlowNodeCodes);
-
     int batchCreateFlowProgressRels(List<WorkFlowProgressRelVO> workFlowProgressRelVOS);
 
     List<WorkFlowProgressRelVO> batchGetFlowProgressRels(Long workFlowProgressId, Integer type);

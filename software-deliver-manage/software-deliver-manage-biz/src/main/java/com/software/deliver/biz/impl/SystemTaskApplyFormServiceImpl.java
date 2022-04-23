@@ -76,14 +76,14 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
                 .status(WorkFlowProgressStatusEnum.SUBMIT.getStatus())
                 .build();
         WorkFlowNode briefStartNode = workFlowService.getBriefStartNode(workFlow.getCode());
-        workFlowProgress.setWorkFlowNodeCode(briefStartNode.getWorkFlowNodeCode());
+        workFlowProgress.setWorkFlowNodeCode(briefStartNode.getCode());
         workFlowProgressService.create(workFlowProgress);
         Long currentFlowProgressId = workFlowProgress.getId();
 
         //第一个审批人
         //只有一个子节点
-        List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(workFlow.getId(), briefStartNode.getWorkFlowNodeCode());
-        workFlowProgress.setWorkFlowNodeCode(briefNextNodes.get(0).getWorkFlowNodeCode());
+        List<WorkFlowNode> briefNextNodes = workFlowService.getBriefNextNode(workFlow.getId(), briefStartNode.getCode());
+        workFlowProgress.setWorkFlowNodeCode(briefNextNodes.get(0).getCode());
         workFlowProgress.setStatus(WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
         workFlowProgress.setId(null);
         workFlowProgress.setHandlerUserId(systemTaskApplyForm.getOwnerUserId());

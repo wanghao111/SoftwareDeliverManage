@@ -55,17 +55,6 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
     }
 
     @Override
-    public int batchUpdate(List<WorkFlowProgress> workFlowProgresses) {
-        return workFlowProcessDao.batchUpdate(WorkFlowProgressConverter.batchFrom(workFlowProgresses));
-    }
-
-    @Override
-    public List<WorkFlowProgress> batchGetByNodeCode(Long workFlowId, List<String> workFlowNodeCodes) {
-        List<WorkFlowProgressVO> workFlowProgressVOS = workFlowProcessDao.batchGetByNodeCode(workFlowId, workFlowNodeCodes);
-        return WorkFlowProgressConverter.batchFromVO(workFlowProgressVOS);
-    }
-
-    @Override
     public int batchCreateFlowProgressRels(List<WorkFlowProgressRelVO> workFlowProgressRelVOS) {
         return workFlowProgressRelDao.batchCreate(workFlowProgressRelVOS);
     }

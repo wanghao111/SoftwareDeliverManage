@@ -2,6 +2,7 @@ package com.software.deliver.dal.mapper;
 
 import com.software.deliver.dal.vo.WorkFlowNodeRelVO;
 import com.software.deliver.dal.vo.WorkFlowNodeVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,9 +13,8 @@ import java.util.List;
  */
 public interface WorkFlowNodeRelDao {
 
-//    int create(WorkFlowNodeRelVO workFlowNodeRelVO);
 
-    int batchInsert(List<WorkFlowNodeRelVO> workFlowNodeRelVOS);
+    int batchInsert(@Param("nodeRels") List<WorkFlowNodeRelVO> workFlowNodeRelVOS);
 
     int deleteByWorkFlowId(Long workFlowId);
 

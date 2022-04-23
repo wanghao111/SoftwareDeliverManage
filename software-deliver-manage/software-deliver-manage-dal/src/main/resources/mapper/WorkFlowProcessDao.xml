@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowProcessDao">
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowProgressVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_flow_id" jdbcType="BIGINT" property="workFlowId" />
+        <result column="work_flow_code" jdbcType="VARCHAR" property="workFlowCode" />
+        <result column="work_flow_node_code" jdbcType="VARCHAR" property="workFlowNodeCode" />
+        <result column="work_flow_instance_id" jdbcType="BIGINT" property="workFlowInstanceId" />
+        <result column="handler_user_id" jdbcType="BIGINT" property="handlerUserId" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="handler_msg" jdbcType="VARCHAR" property="handlerMsg" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_progress
+    </sql>
+
+    <sql id="create_set_value">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="workFlowId != null">
+                    work_flow_id = #{workFlowId,jdbcType=BIGINT},
+                </if>
+                <if test="workFlowCode != null">
+                    work_flow_code = #{workFlowCode,jdbcType=VARCHAR},
+                </if>
+                <if test="workFlowNodeCode != null">
+                    work_flow_node_code = #{workFlowNodeCode,jdbcType=VARCHAR},
+                </if>
+                <if test="workFlowInstanceId != null">
+                    work_flow_instance_id = #{workFlowInstanceId,jdbcType=BIGINT},
+                </if>
+                <if test="handlerUserId != null">
+                    handler_user_id = #{handlerUserId,jdbcType=BIGINT},
+                </if>
+                <if test="status != null">
+                    status = #{status,jdbcType=TINYINT},
+                </if>
+                <if test="handlerMsg != null">
+                    handler_msg = #{handlerMsg,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </set>
+    </sql>
+
+    <sql id="update_set_value">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="status != null">
+                    status = #{status,jdbcType=TINYINT},
+                </if>
+                <if test="handlerMsg != null">
+                    handler_msg = #{handlerMsg,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </set>
+    </sql>
+
+    <sql id="batch_get_by_codes">
+        <foreach collection="nodeCodes" item="code" index="index" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </sql>
+
+    <insert id="create" parameterType="com.software.deliver.dal.vo.WorkFlowProgressVO" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> <include refid="create_set_value"/>
+    </insert>
+
+    <update id="update" parameterType="com.software.deliver.dal.vo.WorkFlowProgressVO">
+        update <include refid="table_name"/> <include refid="update_set_value"/> where id=#{id} limit 1
+    </update>
+
+    <select id="getByFlowProgressId" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where id=#{id} limit 1
+    </select>
+
+</mapper>

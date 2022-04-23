@@ -16,7 +16,7 @@ import java.util.List;
 public class WorkFlowNode {
     private long id;
 
-    private String workFlowNodeCode;
+    private String code;
 
     private long workFlowId;
 

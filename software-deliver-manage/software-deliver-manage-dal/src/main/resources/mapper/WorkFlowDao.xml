@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="is_enable" jdbcType="TINYINT" property="isEnable" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow
+    </sql>
+
+    <sql id="create_set_value">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="code != null">
+                    code = #{code,jdbcType=VARCHAR},
+                </if>
+                <if test="title != null">
+                    title = #{title,jdbcType=VARCHAR},
+                </if>
+                <if test="isEnable != null">
+                    is_enable = #{isEnable,jdbcType=TINYINT},
+                </if>
+                <if test="status != null">
+                    status = #{status,jdbcType=TINYINT},
+                </if>
+            </trim>
+        </set>
+    </sql>
+
+    <sql id="update_set_value">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="title != null">
+                    title = #{title,jdbcType=VARCHAR},
+                </if>
+                <if test="isEnable != null">
+                    is_enable = #{isEnable,jdbcType=TINYINT},
+                </if>
+                <if test="status != null">
+                    status = #{status,jdbcType=TINYINT},
+                </if>
+            </trim>
+        </set>
+    </sql>
+
+    <insert id="create" parameterType="com.software.deliver.dal.vo.WorkFlowVO" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> <include refid="create_set_value"/>
+    </insert>
+
+    <update id="update" parameterType="com.software.deliver.dal.vo.WorkFlowVO">
+        update <include refid="table_name"/> <include refid="update_set_value"/> where code=#{code} limit 1
+    </update>
+
+    <update id="delete">
+        delete from <include refid="table_name"/> where code=#{code} limit 1
+    </update>
+
+<!--    <select id="queryList" resultMap="BaseResultMap" >-->
+<!--        <bind name="offset" value="(param.page-1)*param.pageSize"/>-->
+<!--        select * from <include refid="table_name"/>-->
+<!--        where  1=1-->
+<!--        <trim>-->
+<!--                <if test="param.code != null and param.code !=''">-->
+<!--                and code=#{param.code}-->
+<!--                </if>-->
+<!--                <if test="param.name != null and param.name !=''">-->
+<!--                and name like concat('%',#{param.name},'%')-->
+<!--                </if>-->
+<!--        </trim>-->
+<!--        limit #{offset},#{param.pageSize}-->
+<!--    </select>-->
+
+<!--    <select id="getTotalCount" resultType="int">-->
+<!--        select count(id) from <include refid="table_name"/>-->
+<!--        where  1=1-->
+<!--        <trim>-->
+<!--            <if test="param.code != null and param.code !=''">-->
+<!--                and code=#{param.code}-->
+<!--            </if>-->
+<!--            <if test="param.name != null and param.name !=''">-->
+<!--                and name like concat('%',#{param.name},'%')-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--    </select>-->
+
+    <select id="getByCode" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where code=#{code} limit 1
+    </select>
+</mapper>

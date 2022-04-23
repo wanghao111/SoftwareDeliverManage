@@ -16,9 +16,7 @@ public interface WorkFlowProcessDao {
     WorkFlowProgressVO getByFlowProgressId(Long workFlowProgressId);
 
     int update(WorkFlowProgressVO workFlowProgressVO);
-
-
-    List<WorkFlowProgressVO> batchGetByNodeCode(Long workFlowId, List<String> workFlowNodeCodes);
+    
 
     List<WorkFlowProgressVO> batchGetByNodeIds(List<Long> workFlowNodeIds);
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowNodeRelDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowNodeRelVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="wor_flow_id" jdbcType="BIGINT" property="workFlowId" />
+        <result column="work_flow_node_id" jdbcType="BIGINT" property="workFlowNodeId" />
+        <result column="work_flow_node_code" jdbcType="VARCHAR" property="workFlowNodeCode" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="rel_work_flow_node_code" jdbcType="VARCHAR" property="relWorkFlowNodeCode" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_node_relation
+    </sql>
+
+    <sql id="batch_get_by_codes">
+        <foreach collection="nodeCodes" item="code" index="index" open="(" close=")" separator=",">
+            #{code}
+        </foreach>
+    </sql>
+
+    <sql id="batch_insert_field">wor_flow_id, work_flow_node_id,work_flow_node_code, type, rel_work_flow_node_code</sql>
+
+    <sql id="batch_insert_value">
+        <foreach collection="nodeRels" index="index" item="nodeRel" separator="," open="(" close=")" >
+            (#{nodeRel.workFlowId},#{nodeRel.workFlowNodeId},#{workFlowNodeCode},#{nodeRel.type},#{nodeRel.relWorkFlowNodeCode}
+        </foreach>
+    </sql>
+
+    <update id="deleteByWorkFlowId">
+        delete from <include refid="table_name"/> where wor_flow_id=#{workFlowId}
+    </update>
+
+    <select id="grePreNodeRels" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_node_id = #{workFlowId} and work_flow_node_code = #{workFlowNodeCode} and type = 1
+    </select>
+
+    <select id="getNextNodeRels" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_node_id = #{workFlowId} and work_flow_node_code = #{workFlowNodeCode} and type = 2
+    </select>
+
+</mapper>

@@ -21,6 +21,7 @@ public class WorkFlowNodeRelVO {
 
     private Long workFlowNodeId;
 
+    private String workFlowNodeCode;
     /**
      * 0:无意义，默认
      * 1:前置节点关系
