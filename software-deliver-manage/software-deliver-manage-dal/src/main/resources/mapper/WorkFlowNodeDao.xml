@@ -14,7 +14,6 @@
         <result column="handler_user_id" jdbcType="BIGINT" property="handlerUserId" />
         <result column="var_name" jdbcType="VARCHAR" property="varName" />
         <result column="node_type" jdbcType="TINYINT" property="nodeType" />
-        <result column="summary_type" jdbcType="TINYINT" property="summaryType" />
         <result column="node_seq_type" jdbcType="TINYINT" property="nodeSeqType" />
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
         <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
@@ -30,12 +29,12 @@
         </foreach>
     </sql>
 
-    <sql id="batch_insert_field">code,node_title,work_flow_id,work_flow_code,handler_type,handler_user_id,var_name,node_type,summary_type,node_seq_type</sql>
+    <sql id="batch_insert_field">code,node_title,work_flow_id,work_flow_code,handler_type,handler_user_id,var_name,node_type,node_seq_type</sql>
 
     <sql id="batch_insert_value">
         <foreach collection="workFlowNodeVOs" index="index" item="nodeVo" separator="," open="(" close=")" >
             (#{nodeVo.code},#{nodeVo.nodeTitle},#{nodeVo.workFlowId},#{nodeVo.workFlowCode},#{nodeVo.handlerType},#{nodeVo.handlerUserId},#{nodeVo.varName},#{nodeVo.nodeType}
-            ,#{nodeVo.summaryType},#{nodeVo.nodeSeqType})
+            ,#{nodeVo.nodeSeqType})
         </foreach>
     </sql>
 

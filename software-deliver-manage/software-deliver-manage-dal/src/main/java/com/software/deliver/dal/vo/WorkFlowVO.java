@@ -22,9 +22,8 @@ public class WorkFlowVO {
 
     /**
      * 是否启用
-     * 0:无意义
-     * 1:启用
-     * 2:禁用
+     * 0:启用，默认
+     * 1:禁用
      */
     private Integer isEnable;
 
@@ -35,6 +34,13 @@ public class WorkFlowVO {
      * 3:已退回
      */
     private Integer status;//todo:wh赋值、逻辑处理待补充
+
+    /**
+     * 是否已经删除
+     * 0:未删除，默认
+     * 1:已经删除
+     */
+    private Integer isDeleted;
 
     private Timestamp createdAt;
 

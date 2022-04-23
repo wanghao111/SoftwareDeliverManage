@@ -10,6 +10,7 @@
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="is_enable" jdbcType="TINYINT" property="isEnable" />
         <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
         <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
     </resultMap>
@@ -62,7 +63,7 @@
     </update>
 
     <update id="delete">
-        delete from <include refid="table_name"/> where code=#{code} limit 1
+        update <include refid="table_name"/> set is_deleted = 1 where id=#{id} limit 1
     </update>
 
 <!--    <select id="queryList" resultMap="BaseResultMap" >-->

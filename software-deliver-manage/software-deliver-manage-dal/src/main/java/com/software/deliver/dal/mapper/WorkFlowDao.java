@@ -13,7 +13,7 @@ public interface WorkFlowDao {
     int create(WorkFlowVO workFlowVO);
 
 
-    int delete(Long workFlowId);
+    int delete(Long id);
 
 
     int update(WorkFlowVO workFlowVO);
