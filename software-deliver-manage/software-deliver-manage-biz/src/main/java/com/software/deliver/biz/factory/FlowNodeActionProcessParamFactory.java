@@ -2,6 +2,7 @@ package com.software.deliver.biz.factory;
 
 import com.software.deliver.biz.WorkFlowProgressService;
 import com.software.deliver.biz.dto.FlowNodeActionProcessParam;
+import com.software.deliver.biz.model.WorkFlowProgress;
 import com.software.deliver.dal.mapper.WorkFlowNodeDao;
 import com.software.deliver.dal.mapper.WorkFlowNodeRelDao;
 
@@ -12,20 +13,14 @@ import com.software.deliver.dal.mapper.WorkFlowNodeRelDao;
  */
 public class FlowNodeActionProcessParamFactory {
 
-    public static FlowNodeActionProcessParam build(Long workFlowId, String workFlowCode, Long workFlowInstanceId,
-                                                   String currentNodeCode, Long currentFlowProgressId, Long currentFLowProcessUserId,
+    public static FlowNodeActionProcessParam build(WorkFlowProgress currentProgress,
                                                    WorkFlowNodeDao workFlowNodeDao,
                                                    WorkFlowProgressService workFlowProgressService, WorkFlowNodeRelDao workFlowNodeRelDao) {
         return FlowNodeActionProcessParam.builder()
-                .workFlowId(workFlowId)
-                .workFlowInstanceId(workFlowInstanceId)
-                .workFlowNodeCode(currentNodeCode)
+                .currentProgress(currentProgress)
                 .workFlowNodeDao(workFlowNodeDao)
                 .workFlowProgressService(workFlowProgressService)
                 .workFlowNodeRelDao(workFlowNodeRelDao)
-                .workFlowCode(workFlowCode)
-                .currentFlowProgressUserId(currentFLowProcessUserId)
-                .currentFlowProgressId(currentFlowProgressId)
                 .build();
     }
 }

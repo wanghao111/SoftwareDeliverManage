@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author wanghao
@@ -30,7 +31,7 @@ public class WorkFlowProgress {
     /**
      * 当前处理人id
      */
-    private long handlerUserId;
+    private Long handlerUserId;
 
 
     /**
@@ -46,6 +47,20 @@ public class WorkFlowProgress {
      */
     private Integer status;
 
+    /**
+     * 创建人id
+     */
+    private Long createdBy;
+
+    /**
+     * 前置流程进度ids
+     */
+    List<Long> preWorkFlowProgressIds;
+
+    /**
+     * 后置流程进度ids
+     */
+    List<Long> nextWorkFlowProgressIds;
 
     /**
      * 处理意见

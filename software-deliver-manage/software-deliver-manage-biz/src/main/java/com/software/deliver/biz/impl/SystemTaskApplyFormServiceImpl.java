@@ -71,8 +71,8 @@ public class SystemTaskApplyFormServiceImpl implements SystemTaskApplyFormServic
                 .workFlowId(workFlow.getId())
                 .workFlowCode(workFlow.getCode())
                 .workFlowInstanceId(workFlowInstance.getId())
-//                .flowNodeId()
                 .handlerUserId(systemTaskApplyForm.getCreatedBy())
+                .createdBy(systemTaskApplyForm.getCreatedBy())
                 .status(WorkFlowProgressStatusEnum.SUBMIT.getStatus())
                 .build();
         WorkFlowNode briefStartNode = workFlowService.getBriefStartNode(workFlow.getCode());

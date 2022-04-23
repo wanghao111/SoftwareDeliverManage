@@ -37,6 +37,13 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
     }
 
     @Override
+    public List<WorkFlowProgress> batchCreate(List<WorkFlowProgress> workFlowProgresses) {
+        List<WorkFlowProgressVO> workFlowProgressVOS = WorkFlowProgressConverter.batchFrom(workFlowProgresses);
+        workFlowProcessDao.batchCreate(workFlowProgressVOS);
+        return WorkFlowProgressConverter.batchFromVO(workFlowProgressVOS);
+    }
+
+    @Override
     public WorkFlowProgress getByFlowProgressId(Long workFlowProgressId) {
         WorkFlowProgressVO workFlowProgressVO= workFlowProcessDao.getByFlowProgressId(workFlowProgressId);
         return WorkFlowProgressConverter.from(workFlowProgressVO);
@@ -65,11 +72,12 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
 
     @Override
     public List<WorkFlowProgressRelVO> batchGetFlowProgressRels(Long workFlowProgressId, Integer type) {
-        return null;
+        return workFlowProgressRelDao.batchGetByProgressId(workFlowProgressId, type);
     }
 
     @Override
     public List<WorkFlowProgress> batchGetFlowProgresses(List<Long> workFlowProgressIds) {
-        return null;
+        List<WorkFlowProgressVO> workFlowProgressVOS = workFlowProcessDao.batchGetByNodeIds(workFlowProgressIds);
+        return WorkFlowProgressConverter.batchFromVO(workFlowProgressVOS);
     }
 }

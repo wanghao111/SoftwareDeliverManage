@@ -13,10 +13,13 @@ public enum WorkFlowProgressStatusEnum {
 
     SUBMIT(1,"已提交"),
     NEED_PROCESS(2, "待处理"),
-    AGREE(3,"同意"),
-    REJECT(4,"驳回"),
-    ADD_SIGN(5,"加签"),
-    TRANSFER(6, "转办")
+    AGREE(3,"已同意"),
+    REJECT(4,"已驳回"),
+    ADD_SIGN(5,"已加签"),
+    TRANSFER(6, "已转办"),
+    RETURNED(7, "已退回"),
+
+
     ;
     private Integer status;
 

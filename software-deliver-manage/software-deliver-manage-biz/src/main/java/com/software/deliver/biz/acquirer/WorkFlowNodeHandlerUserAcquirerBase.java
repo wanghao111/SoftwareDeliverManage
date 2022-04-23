@@ -1,17 +1,17 @@
-package com.software.deliver.biz.processor.nodetype;
+package com.software.deliver.biz.acquirer;
 
 import com.software.deliver.biz.dto.FlowNodeHandlerTypeProcessParam;
 
 import java.util.List;
 
-public interface WorkFlowNodeHandlerTypeProcessorBase {
+public interface WorkFlowNodeHandlerUserAcquirerBase {
 
 
     /**
      * 根据节点nodetype查询节点的处理人id
      * @return
      */
-    List<Long> doProcess(FlowNodeHandlerTypeProcessParam param);
+    List<Long> acquire(FlowNodeHandlerTypeProcessParam param);
 
     /**
      * 处理nodetype类型的节点

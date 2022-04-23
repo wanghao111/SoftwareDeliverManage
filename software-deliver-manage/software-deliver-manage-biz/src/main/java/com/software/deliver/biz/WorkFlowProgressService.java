@@ -2,6 +2,7 @@ package com.software.deliver.biz;
 
 import com.software.deliver.biz.model.WorkFlowProgress;
 import com.software.deliver.dal.vo.WorkFlowProgressRelVO;
+import com.software.deliver.dal.vo.WorkFlowProgressVO;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public interface WorkFlowProgressService {
 
     int create(WorkFlowProgress workFlowProgress);
+
+    List<WorkFlowProgress> batchCreate(List<WorkFlowProgress> workFlowProgresses);
 
     WorkFlowProgress getByFlowProgressId(Long workFlowProgressId);
 
@@ -28,6 +31,4 @@ public interface WorkFlowProgressService {
 
     List<WorkFlowProgress> batchGetFlowProgresses(List<Long> workFlowProgressIds);
 
-    //查找第一个创建的progressId
-    WorkFlowProgress getSubmitWorkFlowProgress(Long workFlowInstanceId);
 }

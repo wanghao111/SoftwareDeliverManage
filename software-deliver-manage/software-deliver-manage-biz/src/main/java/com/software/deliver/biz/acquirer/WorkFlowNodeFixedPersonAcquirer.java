@@ -1,4 +1,4 @@
-package com.software.deliver.biz.processor.nodetype;
+package com.software.deliver.biz.acquirer;
 
 import com.software.deliver.biz.dto.FlowNodeHandlerTypeProcessParam;
 import com.software.deliver.biz.enums.WorkFlowNodeHandleTypeEnum;
@@ -6,11 +6,11 @@ import com.software.deliver.biz.enums.WorkFlowNodeHandleTypeEnum;
 import java.util.Arrays;
 import java.util.List;
 
-public class WorkFlowNodeFixedPersonProcessor implements WorkFlowNodeHandlerTypeProcessorBase{
+public class WorkFlowNodeFixedPersonAcquirer implements WorkFlowNodeHandlerUserAcquirerBase {
 
 
     @Override
-    public List<Long> doProcess(FlowNodeHandlerTypeProcessParam param) {
+    public List<Long> acquire(FlowNodeHandlerTypeProcessParam param) {
         return Arrays.asList(param.getHandlerUserId());
     }
 

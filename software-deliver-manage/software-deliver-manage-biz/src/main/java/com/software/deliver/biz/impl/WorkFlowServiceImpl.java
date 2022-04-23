@@ -174,9 +174,8 @@ public class WorkFlowServiceImpl implements WorkFlowService {
         //新增下一个节点审批进度
         //判断是否为最后一个节点
         WorkFlowNodeActionProcessorBase processorBase = WorkFlowNodeActionProcessorFactory.build(actionType);
-        FlowNodeActionProcessParam param = FlowNodeActionProcessParamFactory.build(currentProgress.getWorkFlowId(),
-                currentProgress.getWorkFlowCode(), flowInstanceId, flowNodeCode,currentProgress.getId(), currentProgress.getHandlerUserId(),
-                workFlowNodeDao, workFlowProgressService, workFlowNodeRelDao);
+        FlowNodeActionProcessParam param = FlowNodeActionProcessParamFactory.build(currentProgress,
+                                  workFlowNodeDao, workFlowProgressService, workFlowNodeRelDao);
         return processorBase.doProcess(param);
     }
 }

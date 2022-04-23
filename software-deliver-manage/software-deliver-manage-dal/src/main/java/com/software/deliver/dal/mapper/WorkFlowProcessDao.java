@@ -20,5 +20,9 @@ public interface WorkFlowProcessDao {
 
     List<WorkFlowProgressVO> batchGetByNodeCode(Long workFlowId, List<String> workFlowNodeCodes);
 
+    List<WorkFlowProgressVO> batchGetByNodeIds(List<Long> workFlowNodeIds);
+
     int batchUpdate(List<WorkFlowProgressVO> workFlowProgressVOS);
+
+    int batchCreate(List<WorkFlowProgressVO> workFlowProgressVOS);
 }

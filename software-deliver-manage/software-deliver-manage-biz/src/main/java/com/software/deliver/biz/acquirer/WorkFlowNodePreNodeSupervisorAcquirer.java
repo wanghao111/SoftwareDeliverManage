@@ -1,4 +1,4 @@
-package com.software.deliver.biz.processor.nodetype;
+package com.software.deliver.biz.acquirer;
 
 import com.software.deliver.biz.dto.FlowNodeHandlerTypeProcessParam;
 import com.software.deliver.biz.enums.WorkFlowNodeHandleTypeEnum;
@@ -6,9 +6,9 @@ import com.software.deliver.biz.enums.WorkFlowNodeHandleTypeEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkFlowNodePreNodeSupervisorProcessor implements WorkFlowNodeHandlerTypeProcessorBase{
+public class WorkFlowNodePreNodeSupervisorAcquirer implements WorkFlowNodeHandlerUserAcquirerBase {
     @Override
-    public List<Long> doProcess(FlowNodeHandlerTypeProcessParam param) {
+    public List<Long> acquire(FlowNodeHandlerTypeProcessParam param) {
         param.getCurrentFlowProgressUserId();
 
         //todo:wh 获取当前处理人的主管id，待实现
