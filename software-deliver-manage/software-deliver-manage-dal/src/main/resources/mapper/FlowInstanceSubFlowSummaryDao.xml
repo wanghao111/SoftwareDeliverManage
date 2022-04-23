@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.FlowInstanceSubFlowSummaryDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.FlowInstanceSubFlowSummaryVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_flow_instance_id" jdbcType="BIGINT" property="workFlowInstanceId" />
+        <result column="work_flow_id" jdbcType="BIGINT" property="workFlowId" />
+        <result column="work_flow_node_code" jdbcType="VARCHAR" property="workFlowNodeCode" />
+        <result column="pre_work_flow_node_code" jdbcType="VARCHAR" property="preWorkFlowNodeCode" />
+        <result column="value" jdbcType="TINYINT" property="value" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_instance_subflow_summary
+    </sql>
+
+    <sql id="insert_field">work_flow_instance_id,work_flow_id,work_flow_node_code,pre_work_flow_node_code,value</sql>
+
+    <sql id="insert_value">
+        (#{workFlowInstanceId},#{workFlowId},#{workFlowNodeCode},#{preWorkFlowNodeCode},#{value})
+    </sql>
+
+    <insert id="create" parameterType="com.software.deliver.dal.vo.FlowInstanceSubFlowSummaryVO" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/>  <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
+
+    <update id="increase">
+        update <include refid="table_name"/> set value = value + 1 where work_flow_instance_id = #{instanceId}
+        and work_flow_node_code = #{workFlowNodeCode} and pre_work_flow_node_code = #{preWorkFlowNodeCode} limit 1
+    </update>
+
+    <select id="getWithPreNodeCode" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/>  where work_flow_instance_id = #{instanceId}
+        and work_flow_node_code = #{workFlowNodeCode} and pre_work_flow_node_code = #{preWorkFlowNodeCode} limit 1
+    </select>
+
+    <select id="getByNodeCode" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/>  where work_flow_instance_id = #{instanceId}
+        and work_flow_node_code = #{workFlowNodeCode}
+    </select>
+</mapper>

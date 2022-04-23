@@ -13,9 +13,9 @@ public interface FlowInstanceSubFlowSummaryDao {
 
     int create(FlowInstanceSubFlowSummaryVO flowInstanceSubFlowSummaryVO);
 
-    int increase(Long workFlowId, Long InstanceId, String workFlowNodeCode, String preWorkFlowNodeCode);
+    int increase(Long instanceId, String workFlowNodeCode, String preWorkFlowNodeCode);
 
-    FlowInstanceSubFlowSummaryVO getWithPreNodeCode(Long workFlowId, Long InstanceId, String workFlowNodeCode, String preWorkFlowNode);
+    FlowInstanceSubFlowSummaryVO getWithPreNodeCode(Long InstanceId, String workFlowNodeCode, String preWorkFlowNode);
 
-    List<FlowInstanceSubFlowSummaryVO> getByNodeCode(Long workFlowId, Long InstanceId, String workFlowNodeCode);
+    List<FlowInstanceSubFlowSummaryVO> getByNodeCode(Long InstanceId, String workFlowNodeCode);
 }

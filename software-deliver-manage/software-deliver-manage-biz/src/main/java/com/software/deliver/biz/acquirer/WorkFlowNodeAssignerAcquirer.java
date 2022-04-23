@@ -14,7 +14,7 @@ public class WorkFlowNodeAssignerAcquirer implements WorkFlowNodeHandlerUserAcqu
     @Override
     public List<Long> acquire(FlowNodeHandlerTypeProcessParam param) {
         if (Objects.equals(param.getReviewType(), WorkFlowNodeReviewTypeEnum.APPROVE.getType())) {
-            WorkFlowVariableVO workFlowVariableVO = param.getWorkFlowVariableDao().getByVarName(param.getVarName());
+            WorkFlowVariableVO workFlowVariableVO = param.getWorkFlowVariableDao().getByVarName(param.getWorkFlowInstanceId(), param.getVarName());
             return Arrays.asList(workFlowVariableVO.getValue());
         } else {
             return new ArrayList<>();

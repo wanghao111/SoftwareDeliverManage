@@ -76,7 +76,7 @@ public class WorkFlowNodeApproveProcessor implements WorkFlowNodeActionProcessor
 
         FlowInstanceSubFlowSummaryDao flowInstanceSubFlowSummaryDao = param.getFlowInstanceSubFlowSummaryDao();
         FlowInstanceSubFlowSummaryVO flowInstanceSubFlowSummaryVO = flowInstanceSubFlowSummaryDao
-                .getWithPreNodeCode(workFlowId, currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode(), currentNodeCode);
+                .getWithPreNodeCode(currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode(), currentNodeCode);
         if (null == flowInstanceSubFlowSummaryVO || null == flowInstanceSubFlowSummaryVO.getId()) {
             FlowInstanceSubFlowSummaryVO flowSummaryVO = FlowInstanceSubFlowSummaryVO.builder()
                     .workFlowId(workFlowId)
@@ -87,10 +87,10 @@ public class WorkFlowNodeApproveProcessor implements WorkFlowNodeActionProcessor
                     .build();
             flowInstanceSubFlowSummaryDao.create(flowSummaryVO);
         } else {
-            flowInstanceSubFlowSummaryDao.increase(workFlowId, currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode(), currentNodeCode);
+            flowInstanceSubFlowSummaryDao.increase(currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode(), currentNodeCode);
 
-            List<FlowInstanceSubFlowSummaryVO> flowSummaryVOS = flowInstanceSubFlowSummaryDao.getByNodeCode(workFlowId,
-                    currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode());
+            List<FlowInstanceSubFlowSummaryVO> flowSummaryVOS = flowInstanceSubFlowSummaryDao.getByNodeCode(currentWorkFlowInstanceId,
+                    nextWorkFlowNodeVO.getCode());
 
             int totalPreApproveCount = Optional.ofNullable(flowSummaryVOS).orElse(new ArrayList<>())
                     .stream().mapToInt(FlowInstanceSubFlowSummaryVO::getValue).sum();

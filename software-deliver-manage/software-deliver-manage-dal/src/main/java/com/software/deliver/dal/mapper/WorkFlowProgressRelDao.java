@@ -1,6 +1,7 @@
 package com.software.deliver.dal.mapper;
 
 import com.software.deliver.dal.vo.WorkFlowProgressRelVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,10 +13,7 @@ import java.util.List;
 public interface WorkFlowProgressRelDao {
 
 
-    int create(WorkFlowProgressRelVO workFlowProgressRelVO);
-
-
-    int batchCreate(List<WorkFlowProgressRelVO> workFlowProgressRelVOS);
+    int batchCreate(@Param("progressRels") List<WorkFlowProgressRelVO> workFlowProgressRelVOS);
 
     List<WorkFlowProgressRelVO> batchGetByProgressId(Long workFlowProgressId, Integer type);
 

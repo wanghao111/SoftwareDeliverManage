@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.SystemTaskApplyFormDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.SystemTaskApplyFormVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="requirement_id" jdbcType="BIGINT" property="requirementId" />
+        <result column="requirement_title" jdbcType="VARCHAR" property="requirementTitle" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="owner_user_id" jdbcType="BIGINT" property="ownerUserId" />
+        <result column="msg" jdbcType="VARCHAR" property="msg" />
+        <result column="qa_user_id" jdbcType="BIGINT" property="qaUserId" />
+        <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+        <result column="work_flow_instance_id" jdbcType="BIGINT" property="workFlowInstanceId" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        system_task
+    </sql>
+
+    <sql id="create_set_value">
+        <set>
+            <trim suffixOverrides=",">
+                <if test="requirementId != null">
+                    requirement_id = #{requirementId,jdbcType=BIGINT},
+                </if>
+                <if test="requirementTitle != null">
+                    requirement_title = #{requirementTitle,jdbcType=VARCHAR},
+                </if>
+                <if test="type != null">
+                    type = #{type,jdbcType=TINYINT},
+                </if>
+                <if test="ownerUserId != null">
+                    owner_user_id = #{ownerUserId,jdbcType=BIGINT},
+                </if>
+                <if test="msg != null">
+                    msg = #{msg,jdbcType=VARCHAR},
+                </if>
+                <if test="qaUserId != null">
+                    qa_user_id = #{qaUserId,jdbcType=BIGINT},
+                </if>
+                <if test="createdBy != null">
+                    created_by = #{createdBy,jdbcType=BIGINT},
+                </if>
+                <if test="workFlowInstanceId != null">
+                    work_flow_instance_id = #{workFlowInstanceId,jdbcType=BIGINT},
+                </if>
+            </trim>
+        </set>
+    </sql>
+
+    <insert id="create" parameterType="com.software.deliver.dal.vo.SystemTaskApplyFormVO" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> <include refid="create_set_value"/>
+    </insert>
+
+</mapper>

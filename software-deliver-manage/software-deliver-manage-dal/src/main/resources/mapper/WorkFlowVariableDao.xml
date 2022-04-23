@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowVariableDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowVariableVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_flow_instance_id" jdbcType="BIGINT" property="workFlowInstanceId" />
+        <result column="var_name" jdbcType="VARCHAR" property="varName" />
+        <result column="value" jdbcType="BIGINT" property="value" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_variable
+    </sql>
+
+    <sql id="insert_field">work_flow_instance_id,var_name,value</sql>
+
+    <sql id="insert_value">
+        (#{workFlowInstanceId},#{varName},#{value})
+    </sql>
+
+    <insert id="create" parameterType="com.software.deliver.dal.vo.WorkFlowVariableVO" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/>  <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
+
+    <select id="getByVarName" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_progress_id=#{workFlowProgressId} and var_name = #{varName}
+    </select>
+</mapper>

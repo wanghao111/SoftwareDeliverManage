@@ -11,6 +11,7 @@ public interface WorkFlowVariableDao {
 
     int create(WorkFlowVariableVO workFlowVariableVO);
 
-    WorkFlowVariableVO getByVarName(String varName);
+    //todo:wh暂时只考虑一个varname一个value，后续可以考虑一个varname可以有多个value
+    WorkFlowVariableVO getByVarName(Long workFlowInstanceId, String varName);
 
 }

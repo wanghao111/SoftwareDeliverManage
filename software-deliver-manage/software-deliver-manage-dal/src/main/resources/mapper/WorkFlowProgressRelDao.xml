@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.deliver.dal.mapper.WorkFlowProgressRelDao">
+
+
+    <resultMap id="BaseResultMap" type="com.software.deliver.dal.vo.WorkFlowProgressRelVO">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_flow_instance_id" jdbcType="BIGINT" property="workFlowInstanceId" />
+        <result column="work_flow_progress_id" jdbcType="BIGINT" property="workFlowProgressId" />
+        <result column="work_flow_progress_rel_id" jdbcType="BIGINT" property="workFlowProgressRelId" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    </resultMap>
+
+    <sql id="table_name">
+        work_flow_progress_relation
+    </sql>
+
+    <sql id="batch_insert_field">work_flow_instance_id,work_flow_progress_id,work_flow_progress_rel_id,type</sql>
+
+    <sql id="batch_insert_value">
+        <foreach collection="progressRels" index="index" item="progressRel" separator="," open="(" close=")" >
+            (#{progressRel.workFlowInstanceId},#{progressRel.workFlowProgressId},#{progressRel.workFlowProgressRelId},#{progressRel.type})
+        </foreach>
+    </sql>
+
+    <insert id="batchCreate" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/>  <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
+
+    <select id="batchGetByProgressId" resultMap="BaseResultMap">
+        select * from <include refid="table_name"/> where work_flow_progress_id=#{workFlowProgressId} and type = #{type}
+    </select>
+</mapper>

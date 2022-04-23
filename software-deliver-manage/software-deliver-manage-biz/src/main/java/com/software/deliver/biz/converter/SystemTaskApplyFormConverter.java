@@ -19,7 +19,7 @@ public class SystemTaskApplyFormConverter {
                 .requirementId(systemTaskApplyForm.getRequirementId())
                 .requirementTitle(systemTaskApplyForm.getRequirementTitle())
                 .type(systemTaskApplyForm.getType())
-                .title(systemTaskApplyForm.getTitle())
+//                .title(systemTaskApplyForm.getTitle())
                 .workFlowInstanceId(systemTaskApplyForm.getWorkFlowInstanceId())
                 .createdBy(systemTaskApplyForm.getCreatedBy())
                 .msg(systemTaskApplyForm.getMsg())
