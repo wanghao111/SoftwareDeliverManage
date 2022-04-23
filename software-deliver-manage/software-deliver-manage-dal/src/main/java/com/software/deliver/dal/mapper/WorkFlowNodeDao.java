@@ -13,7 +13,6 @@ import java.util.List;
 public interface WorkFlowNodeDao {
 
 
-//    int create(WorkFlowNodeVO workFlowNodeVO);
 
     int batchInsert(@Param("workFlowNodeVOs") List<WorkFlowNodeVO> workFlowNodeVOS);
 

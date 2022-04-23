@@ -13,14 +13,12 @@ public interface WorkFlowProcessDao {
 
     int create(WorkFlowProgressVO workFlowProgressVO);
 
-    WorkFlowProgressVO getByFlowProgressId(Long workFlowProgressId);
+    WorkFlowProgressVO getByFlowProgressId(Long id);
 
     int update(WorkFlowProgressVO workFlowProgressVO);
-    
 
-    List<WorkFlowProgressVO> batchGetByNodeIds(List<Long> workFlowNodeIds);
 
-    int batchUpdate(List<WorkFlowProgressVO> workFlowProgressVOS);
+    List<WorkFlowProgressVO> batchGetByIds(List<Long> workFlowNodeIds);
 
     int batchCreate(List<WorkFlowProgressVO> workFlowProgressVOS);
 }

@@ -61,9 +61,18 @@
         </set>
     </sql>
 
-    <sql id="batch_get_by_codes">
-        <foreach collection="nodeCodes" item="code" index="index" open="(" close=")" separator=",">
-            #{code}
+    <sql id="batch_get_by_ids">
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </sql>
+
+    <sql id="batch_insert_field">work_flow_id,work_flow_code,work_flow_node_code,work_flow_instance_id,handler_user_id,status,handler_msg</sql>
+
+    <sql id="batch_insert_value">
+        <foreach collection="nodeActions" index="index" item="nodeAction" separator="," open="(" close=")" >
+            (#{nodeAction.workFlowId},#{nodeAction.workFlowNodeCode},#{nodeAction.workFlowNodeCode},#{nodeAction.workFlowInstanceId},
+             #{nodeAction.handlerUserId},#{nodeAction.status},#{nodeAction.handlerMsg}
         </foreach>
     </sql>
 
@@ -78,5 +87,13 @@
     <select id="getByFlowProgressId" resultMap="BaseResultMap">
         select * from <include refid="table_name"/> where id=#{id} limit 1
     </select>
+
+    <select id="batchGetByIds">
+        select * from <include refid="table_name"/> where id in <include refid="batch_get_by_ids"/>
+    </select>
+
+    <insert id="batchCreate" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/>  <include refid="batch_insert_field"/> values <include refid="batch_insert_value"/>
+    </insert>
 
 </mapper>

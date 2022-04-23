@@ -66,7 +66,7 @@ public class WorkFlowProgressServiceImpl implements WorkFlowProgressService {
 
     @Override
     public List<WorkFlowProgress> batchGetFlowProgresses(List<Long> workFlowProgressIds) {
-        List<WorkFlowProgressVO> workFlowProgressVOS = workFlowProcessDao.batchGetByNodeIds(workFlowProgressIds);
+        List<WorkFlowProgressVO> workFlowProgressVOS = workFlowProcessDao.batchGetByIds(workFlowProgressIds);
         return WorkFlowProgressConverter.batchFromVO(workFlowProgressVOS);
     }
 }
