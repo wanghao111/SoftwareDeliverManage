@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  */
 @Data
 @Builder
+//todo:wh待迁移到WorkFlowInstanceVariableDao
 public class WorkFlowVariableVO {
 
     private long id;

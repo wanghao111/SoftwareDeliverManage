@@ -35,11 +35,11 @@ public class WorkFlowNodeConverter {
                 .workFlowId(workFlowNode.getWorkFlowId())
                 .workFlowCode(workFlowNode.getWorkFlowCode())
                 .nodeTitle(workFlowNode.getWorkFlowNodeTitle())
-                .nodeType(workFlowNode.getNodeType())
+                .preNextNodeType(workFlowNode.getPreNextNodeType())
                 .nodeSeqType(workFlowNode.getNodeSeqType())
                 .handlerType(workFlowNode.getHandlerType())
                 .summaryType(workFlowNode.getSummaryType())
-                .varName(workFlowNode.getVarName())
+                .handlerVarName(workFlowNode.getVarName())
                 .handlerUserId(workFlowNode.getHandlerUserId())
                 .build();
 
@@ -88,11 +88,11 @@ public class WorkFlowNodeConverter {
                 .nodeSeqType(workFlowNodeVO.getNodeSeqType())
                 .handlerType(workFlowNodeVO.getHandlerType())
                 .summaryType(workFlowNodeVO.getSummaryType())
-                .nodeType(workFlowNodeVO.getNodeType())
+                .preNextNodeType(workFlowNodeVO.getPreNextNodeType())
                 .workFlowId(workFlowNodeVO.getWorkFlowId())
                 .workFlowCode(workFlowNodeVO.getWorkFlowCode())
                 .workFlowNodeTitle(workFlowNodeVO.getNodeTitle())
-                .varName(workFlowNodeVO.getVarName())
+                .varName(workFlowNodeVO.getHandlerVarName())
                 .handlerUserId(workFlowNodeVO.getHandlerUserId())
                 .build();
         return workFlowNode;

@@ -2,12 +2,17 @@ package com.software.deliver.biz.enums;
 
 import lombok.Getter;
 
+/**
+ * @author wanghao
+ * @version 1.0
+ * @date 2022/4/25 21:40
+ */
 @Getter
 public enum WorkFlowNodeTypeEnum {
 
     COMMON_NODE(1,"普通节点"),
-    BRANCH_NODE(2, "分支节点，多个子节点"),
-    SUMMARY_NODE(3, "汇总节点，多个父节点"),
+    ASSIGN_NODE(2, "加签节点"),
+    TRANSFER_NODE(3, "转办节点"),
 
     ;
     private Integer type;
@@ -18,4 +23,6 @@ public enum WorkFlowNodeTypeEnum {
         this.type = type;
         this.msg = msg;
     }
+
+
 }

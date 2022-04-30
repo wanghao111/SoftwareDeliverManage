@@ -1,5 +1,6 @@
 package com.software.deliver.biz.model;
 
+import com.software.deliver.biz.enums.WorkFlowNodeBizTypeEnum;
 import lombok.Builder;
 import lombok.Data;
 
@@ -47,11 +48,29 @@ public class WorkFlowNode {
 
     /**
      * 0:无意义，默认
+     * 1:普通节点，一个父节点一个子节点
+     * 2:分支节点，一个父节点有多个子节点
+     * 3:汇总节点，有多个父节点一个子节点
+     * 4汇总分支节点，有多个父节点多个子节点
+     */
+    private Integer preNextNodeType;
+    //todo:wh待dao和ddl等关联修改
+    /**
      * 1:普通节点
-     * 2:分支节点，有多个子节点
-     * 3:汇总节点，有多个父节点
+     * 2:加签节点
+     * 3:转办节点
      */
     private Integer nodeType;
+
+    /**
+     * @see WorkFlowNodeBizTypeEnum
+     */
+    private Integer nodeBizType;
+
+    /**
+     * 节点流入判断变量名
+     */
+    private String judgeVarName;
 
     /**
      * nodeType=3汇总节点时，该参数有效

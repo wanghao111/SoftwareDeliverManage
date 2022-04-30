@@ -51,18 +51,33 @@ public class WorkFlowNodeVO {
      * 流程节点处理人变量名称
      * handlerType=1时需要查询变量表
      */
-    private String varName;
+    private String handlerVarName;
 
     /**
      * 0:无意义，默认
+     * 1:普通节点,1个父节点，1个子节点
+     * 2:分支节点，1个父节点，多个子节点
+     * 3:汇总节点，多个父节点，1个子节点
+     * 4:分支汇总，多个父节点，多个子节点
+     */
+    private Integer preNextNodeType;
+
+    /**
      * 1:普通节点
-     * 2:分支节点，有多个子节点
-     * 3:汇总节点，有多个父节点
+     * 2:加签节点
+     * 3:转办节点
      */
     private Integer nodeType;
 
+    private Integer nodeBizType;
+
     /**
-     * nodeType=3汇总节点时，该参数有效
+     * 节点流入的判断变量名，为空表示为无需判断直接流入
+     */
+    private String judgeVarName;
+
+    /**
+     * nodeType=3汇总节点时，该参数有效,暂时默认2，1暂不支持
      * 0:无意义，默认
      * 1:任意一个父节点通过即可流转至当前汇总节点
      * 2:所有父节点通过后流转至当前汇总节点

@@ -1,6 +1,5 @@
 package com.software.deliver.biz.processor.nodereview;
 
-import com.software.deliver.biz.WorkFlowProgressService;
 import com.software.deliver.biz.dto.FlowNodeActionProcessParam;
 import com.software.deliver.biz.dto.FlowNodeHandlerTypeProcessParam;
 import com.software.deliver.biz.enums.*;
@@ -51,15 +50,21 @@ public class WorkFlowNodeApproveProcessor implements WorkFlowNodeActionProcessor
                 .collect(Collectors.toList());
 
         List<WorkFlowNodeVO> nextWorkFlowNodes = workFlowNodeDao.batchGetByNodeCodes(workFlowId, relNodeCodes);
+
+        nextWorkFlowNodes = nextWorkFlowNodes.stream()
+                .filter(workFlowNodeVO -> WorkFlowNodeTypeEnum.COMMON_NODE.getType().equals(workFlowNodeVO.getNodeType()))
+                .collect(Collectors.toList());
+
         nextWorkFlowNodes.forEach(nextWorkFlowNodeVO -> {
             //节点处理人ids
             List<Long> userIds = acquireFlowNodeUserIds(param, nextWorkFlowNodeVO);
 
-            if (WorkFlowNodeTypeEnum.COMMON_NODE.getType().equals(nextWorkFlowNodeVO.getNodeType()) ||
-                    WorkFlowNodeTypeEnum.BRANCH_NODE.getType().equals(nextWorkFlowNodeVO.getNodeType()) ) {
+            if (PreNextNodeTypeEnum.COMMON_NODE.getType().equals(nextWorkFlowNodeVO.getPreNextNodeType()) ||
+                    PreNextNodeTypeEnum.BRANCH_NODE.getType().equals(nextWorkFlowNodeVO.getPreNextNodeType()) ) {
                 createFlowProgress(param,userIds,WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
 
-            } else if (WorkFlowNodeTypeEnum.SUMMARY_NODE.getType().equals(nextWorkFlowNodeVO.getNodeType())) {
+            } else if (PreNextNodeTypeEnum.SUMMARY_NODE.getType().equals(nextWorkFlowNodeVO.getPreNextNodeType()) ||
+                    PreNextNodeTypeEnum.BRANCH_SUMMARY_NODE.getType().equals(nextWorkFlowNodeVO.getPreNextNodeType()) ) {
                 //todo:wh加签的场景待考虑
                 processSummaryNode(param, nextWorkFlowNodeVO, userIds);
             }
@@ -88,20 +93,51 @@ public class WorkFlowNodeApproveProcessor implements WorkFlowNodeActionProcessor
             flowInstanceSubFlowSummaryDao.create(flowSummaryVO);
         } else {
             flowInstanceSubFlowSummaryDao.increase(currentWorkFlowInstanceId, nextWorkFlowNodeVO.getCode(), currentNodeCode);
+        }
 
-            List<FlowInstanceSubFlowSummaryVO> flowSummaryVOS = flowInstanceSubFlowSummaryDao.getByNodeCode(currentWorkFlowInstanceId,
-                    nextWorkFlowNodeVO.getCode());
+        List<FlowInstanceSubFlowSummaryVO> flowSummaryVOS = flowInstanceSubFlowSummaryDao.getByNodeCode(currentWorkFlowInstanceId,
+                nextWorkFlowNodeVO.getCode());
 
-            int totalPreApproveCount = Optional.ofNullable(flowSummaryVOS).orElse(new ArrayList<>())
-                    .stream().mapToInt(FlowInstanceSubFlowSummaryVO::getValue).sum();
-
+        WorkFlowNodeDao workFlowNodeDao = param.getWorkFlowNodeDao();
+        WorkFlowNodeVO currentFlowNode = workFlowNodeDao.getByNodeCode(workFlowId, currentNodeCode);
+        if (WorkFlowNodeTypeEnum.COMMON_NODE.getType().equals(currentFlowNode.getNodeType())) {
             List<WorkFlowNodeRelVO> preNodeRels = workFlowNodeRelDao.grePreNodeRels(workFlowId, nextWorkFlowNodeVO.getCode());
+            List<WorkFlowNodeVO> preFlowNodes = workFlowNodeDao.batchGetByNodeCodes(workFlowId, preNodeRels.stream().map(WorkFlowNodeRelVO::getRelWorkFlowNodeCode)
+                    .collect(Collectors.toList()));
 
+            List<String> commonPreNodeCodes = preFlowNodes.stream()
+                    .filter(workFlowNodeVO -> WorkFlowNodeTypeEnum.COMMON_NODE.getType().equals(workFlowNodeVO.getNodeType()))
+                    .map(WorkFlowNodeVO::getCode)
+                    .collect(Collectors.toList());
+            int totalPreApproveCount = flowSummaryVOS.stream()
+                    .filter(subSummary -> commonPreNodeCodes.contains(subSummary.getWorkFlowNodeCode()))
+                    .mapToInt(FlowInstanceSubFlowSummaryVO::getValue)
+                    .sum();
             //所有父节点完成同意审批，暂不支持部分父节点同意即流程往下走等场景
-            if (totalPreApproveCount == preNodeRels.size()) {
+            if (totalPreApproveCount == commonPreNodeCodes.size()) {
                 createFlowProgress(param, userIds, WorkFlowProgressStatusEnum.NEED_PROCESS.getStatus());
             }
+        } else if (WorkFlowNodeTypeEnum.ASSIGN_NODE.getType().equals(currentFlowNode.getNodeSeqType())) {
+            //查看已经创建了几个加签节点，和当前总加签子节点同意总数是否相等
+            List<WorkFlowNodeRelVO> preNodeRels = workFlowNodeRelDao.grePreNodeRels(workFlowId, nextWorkFlowNodeVO.getCode());
+            List<WorkFlowNodeVO> preFlowNodes = workFlowNodeDao.batchGetByNodeCodes(workFlowId, preNodeRels.stream().map(WorkFlowNodeRelVO::getRelWorkFlowNodeCode)
+                    .collect(Collectors.toList()));
+
+            List<String> assignPreNodeCodes = preFlowNodes.stream()
+                    .filter(workFlowNodeVO -> WorkFlowNodeTypeEnum.ASSIGN_NODE.getType().equals(workFlowNodeVO.getNodeType()))
+                    .map(WorkFlowNodeVO::getCode)
+                    .collect(Collectors.toList());
+            int totalPreApproveCount = flowSummaryVOS.stream()
+                    .filter(subSummary -> assignPreNodeCodes.contains(subSummary.getWorkFlowNodeCode()))
+                    .mapToInt(FlowInstanceSubFlowSummaryVO::getValue)
+                    .sum();
+
+            workFlowNodeRelDao.getNextNodeRels(workFlowId, );
+
         }
+
+
+
     }
 
     /**
@@ -154,7 +190,7 @@ public class WorkFlowNodeApproveProcessor implements WorkFlowNodeActionProcessor
                 .workFlowInstanceId(param.getCurrentProgress().getWorkFlowInstanceId())
                 .workFlowNodeCode(worwwkFlowNodeVO.getWorkFlowCode())
                 .reviewType(WorkFlowNodeReviewTypeEnum.APPROVE.getType())
-                .varName(worwwkFlowNodeVO.getVarName())
+                .varName(worwwkFlowNodeVO.getHandlerVarName())
                 .handlerUserId(worwwkFlowNodeVO.getHandlerUserId())
                 .currentFlowProgressUserId(param.getCurrentProgress().getHandlerUserId())
                 .currentFlowProgressId(param.getCurrentProgress().getId())

@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2022/4/17 20:29
  */
 public interface WorkFlowProgressService {
-
+    //todo:wh 待新增progress term
     int create(WorkFlowProgress workFlowProgress);
 
     List<WorkFlowProgress> batchCreate(List<WorkFlowProgress> workFlowProgresses);
